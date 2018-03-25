@@ -45,9 +45,7 @@ public class CreateIssueActivity extends AppCompatActivity {
     EditText ET_DESC_OPTION;
     int iduser;
 
-    //yavuz
-
-    //pull
+    //yavuz123
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
