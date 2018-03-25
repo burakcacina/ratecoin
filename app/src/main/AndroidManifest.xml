@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.burak.ratecoindeneme">
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+
+    <application
+
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".UpdateAccActivity"
+            android:label="Update Account" />
+        <activity
+            android:name=".HomeActivity"
+            android:label="Home Page" />
+        <activity
+            android:name=".DeleteUserActivity"
+            android:label="Delete Account" />
+        <activity
+            android:name=".LoginActivity"
+            android:label="Login Page" />
+        <activity
+            android:name=".SignupActivity"
+            android:label="Signup Page" />
+        <activity
+            android:name=".UserDetailsActivity"
+            android:label="User Details" />
+        <activity
+            android:name=".PhotoActivity"
+            android:label="Photos" />
+        <activity
+            android:name=".CreateIssueActivity"
+            android:label="CreateIssue" />
+        <activity
+            android:name=".CreateIssuewithImageActivity"
+            android:label="CreateIssuewithImageActivity" />
+        <activity
+            android:name=".DetailsActivity"
+            android:label="DetailsActivity" />
+        <activity
+            android:name=".IssueResultActivity"
+            android:label="IssueResult" />
+
+    </application>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+</manifest>

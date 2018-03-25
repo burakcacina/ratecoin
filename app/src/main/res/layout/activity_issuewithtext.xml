@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:orientation="vertical"
+    android:gravity="center">
+
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="431dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvIssueDescOpt"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text=""
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="50dp">
+        </View>
+
+        <TextView
+            android:id="@+id/options_1"
+            android:layout_width="230dp"
+            android:layout_height="55dp"
+            android:background="@drawable/rounded_border_edittext"
+            android:ems="10"
+            android:gravity="center"
+            android:textSize="20dp"/>
+
+        <TextView
+            android:id="@+id/options_2"
+            android:layout_width="230dp"
+            android:layout_height="55dp"
+            android:background="@drawable/rounded_border_edittext"
+            android:ems="10"
+            android:gravity="center"
+            android:textSize="20dp"/>
+
+        <TextView
+            android:id="@+id/options_3"
+            android:layout_width="230dp"
+            android:layout_height="55dp"
+            android:background="@drawable/rounded_border_edittext"
+            android:ems="10"
+            android:gravity="center"
+            android:textSize="20dp"/>
+
+        <TextView
+            android:id="@+id/options_4"
+            android:layout_width="230dp"
+            android:layout_height="55dp"
+            android:background="@drawable/rounded_border_edittext"
+            android:ems="10"
+            android:gravity="center"
+            android:textSize="20dp"/>
+
+        <Button
+            android:id="@+id/issueVoteOptions"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp"
+            android:text="Vote" />
+    </LinearLayout>
+
+
+
+</LinearLayout>

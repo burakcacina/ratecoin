@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:id="@+id/relativeLayout1"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/desc_issuewithimage"
+            android:layout_width="309dp"
+            android:layout_height="138dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="34dp"
+            android:hint="              Write your question here" />
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/createissuewithimage"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        android:text="Create" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="40dp">
+    </View>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/imageoption1"
+            android:layout_width="160dp"
+            android:layout_height="170dp"
+            android:layout_gravity="right"
+            android:layout_marginRight="20dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/issueimage" />
+
+
+        <ImageView
+            android:id="@+id/imageoption2"
+            android:layout_width="160dp"
+            android:layout_height="170dp"
+            android:layout_gravity="left"
+            android:scaleType="fitXY"
+            android:src="@drawable/issueimage" />
+
+
+    </LinearLayout>
+
+</LinearLayout>
