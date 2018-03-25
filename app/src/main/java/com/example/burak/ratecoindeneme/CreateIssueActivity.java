@@ -46,6 +46,8 @@ public class CreateIssueActivity extends AppCompatActivity {
     int iduser;
 
 
+    //pull
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_createissue);
