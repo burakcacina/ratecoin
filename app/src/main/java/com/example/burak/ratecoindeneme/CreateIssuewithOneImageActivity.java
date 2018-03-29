@@ -18,13 +18,16 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -35,15 +38,15 @@ import java.io.DataOutputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Objects;
 
 /**
  * Created by burak on 16.02.2018.
  */
-public class CreateIssuewithImageActivity extends AppCompatActivity {
+public class CreateIssuewithOneImageActivity extends AppCompatActivity {
     String USERID,result;
     String c_option1,c_option2,c_option3,c_option4,c_option5,c_description;
     int i=0;
@@ -61,7 +64,13 @@ public class CreateIssuewithImageActivity extends AppCompatActivity {
     String image_name,image_name2,error;
     String URL_TO_HIT;
     String description;
+    String c_option[] = new String[5];
     int iduser;
+
+    EditText textIn;
+    Button buttonAdd;
+    LinearLayout container;
+
     protected boolean shouldAskPermissions() {
         return (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1);
     }
@@ -79,7 +88,7 @@ public class CreateIssuewithImageActivity extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_createissuewithimage);
+        setContentView(R.layout.activity_createissuewithoneimage);
 
         if (shouldAskPermissions()) {
             askPermissions();
@@ -90,9 +99,11 @@ public class CreateIssuewithImageActivity extends AppCompatActivity {
 
         ET_DESC_OPTION= (EditText)findViewById(R.id.desc_issuewithimage);
         imageoption = (ImageView) findViewById(R.id.imageoption1);
-        imageoption2 = (ImageView) findViewById(R.id.imageoption2);
+        textIn = (EditText)findViewById(R.id.textin);
+        buttonAdd = (Button)findViewById(R.id.add);
+        container = (LinearLayout)findViewById(R.id.container);
 
-        final String URL_TO_HIT = "http://localapi25.atwebpages.com/android_connect/issue_createimage.php?id=" + iduser;
+        URL_TO_HIT = "http://localapi25.atwebpages.com/android_connect/issue_createoneimage.php?id=" + iduser;
         Button but1 = (Button) findViewById(R.id.createissuewithimage);
 
 
@@ -106,16 +117,53 @@ public class CreateIssuewithImageActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 check = 1;
-                Intent pickPhoto = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                Intent pickPhoto = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(pickPhoto, 1);//one can be replaced with any action code
             }
         });
-        imageoption2.setOnClickListener(new View.OnClickListener() {
+
+
+        buttonAdd.setOnClickListener(new View.OnClickListener(){
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
-            public void onClick(View view) {
-                check = 0;
-                Intent pickPhoto = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(pickPhoto, 1);//one can be replaced with any action code
+            public void onClick(View v) {
+
+                if(edittextcount <= 4)
+                {
+                    LayoutInflater layoutInflater =
+                            (LayoutInflater) getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    final View addView = layoutInflater.inflate(R.layout.row, null);
+                    final TextView textOut = (TextView) addView.findViewById(R.id.textout);
+                    textOut.setText(textIn.getText().toString());
+
+                    c_option[edittextcount] = textOut.getText().toString();
+                    textOut.setId(edittextcount);
+
+                    System.out.println(c_option[edittextcount]);
+
+                    Button buttonRemove = (Button) addView.findViewById(R.id.remove);
+                    final View.OnClickListener thisListener = new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            ((LinearLayout) addView.getParent()).removeView(addView);
+                            edittextcount = edittextcount - 1;
+
+                        }
+                    };
+                    if(Objects.equals(textIn.getText().toString(), ""))
+                    {
+                        Toast.makeText(getApplicationContext(), "Fill option!!", Toast.LENGTH_LONG).show();
+                    }
+                    buttonRemove.setOnClickListener(thisListener);
+                    container.addView(addView);
+
+                    textIn.setText("");
+                    edittextcount = edittextcount + 1;
+
+                }
+                else {
+                    Toast.makeText(getApplicationContext(), "No more options!!", Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -148,12 +196,17 @@ public class CreateIssuewithImageActivity extends AppCompatActivity {
 
             try {
 
-                if(image_path2[0] == null && image_path2[1] == null)
+                if(image_path2[0] == null)
                 {
-                    error = "Fill the form.";
+                    error = "Choose an image from gallery.";
+                }
+                else if(c_option[1] == null || c_option[2] == null)
+                {
+                    error = "Fill the options.";
+
                 }
                 else {
-                    URL url = new URL("http://localapi25.atwebpages.com/android_connect/issue_createimage.php?id=" + iduser);
+                    URL url = new URL(URL_TO_HIT);
                     httpURLConnection = (HttpURLConnection) url.openConnection();
                     httpURLConnection.setDoInput(true);
                     httpURLConnection.setDoOutput(true);
@@ -163,8 +216,7 @@ public class CreateIssuewithImageActivity extends AppCompatActivity {
                     httpURLConnection.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
 
                     description = ET_DESC_OPTION.getText().toString();
-                    image_name=image_path2[0].substring(image_path2[0].lastIndexOf("/") + 1);
-                    image_name2=image_path2[1].substring(image_path2[1].lastIndexOf("/") + 1);
+                    image_name = image_path2[0].substring(image_path2[0].lastIndexOf("/") + 1);
 
                     FileInputStream fileInputStream;
                     DataOutputStream outputStream;
@@ -178,36 +230,55 @@ public class CreateIssuewithImageActivity extends AppCompatActivity {
                     outputStream.writeBytes(lineEnd);
                     outputStream.writeBytes(twoHyphens + boundary + lineEnd);
 
-                    for (int k = 0; k < 2; k++) {
+                    outputStream.writeBytes("Content-Disposition: form-data; name=\"option_1\"" + lineEnd);
+                    outputStream.writeBytes(lineEnd);
+                    outputStream.writeBytes(c_option[1]);
+                    outputStream.writeBytes(lineEnd);
+                    outputStream.writeBytes(twoHyphens + boundary + lineEnd);
 
-                        if (k == 0) {
-                            outputStream.writeBytes("Content-Disposition: form-data; name=\"option_1\";filename=\"" + image_name + "\"" + lineEnd);
-                        } else {
-                            outputStream.writeBytes("Content-Disposition: form-data; name=\"option_2\";filename=\"" + image_name2 + "\"" + lineEnd);
-                        }
+                    outputStream.writeBytes("Content-Disposition: form-data; name=\"option_2\"" + lineEnd);
+                    outputStream.writeBytes(lineEnd);
+                    outputStream.writeBytes(c_option[2]);
+                    outputStream.writeBytes(lineEnd);
+                    outputStream.writeBytes(twoHyphens + boundary + lineEnd);
+
+                    if (c_option[3] != null) {
+                        outputStream.writeBytes("Content-Disposition: form-data; name=\"option_3\"" + lineEnd);
                         outputStream.writeBytes(lineEnd);
-
-                        System.out.println(image_path2[k]);
-
-                        fileInputStream = new FileInputStream(image_path2[k]);
-                        bytesAvailable = fileInputStream.available();
-                        bufferSize = Math.min(bytesAvailable, maxBufferSize);
-                        buffer = new byte[bufferSize];
-
-                        bytesRead = fileInputStream.read(buffer, 0, bufferSize);
-
-                        while (bytesRead > 0) {
-                            outputStream.write(buffer, 0, bufferSize);
-                            bytesAvailable = fileInputStream.available();
-                            bufferSize = Math.min(bytesAvailable, maxBufferSize);
-                            bytesRead = fileInputStream.read(buffer, 0, bufferSize);
-                        }
-
-
+                        outputStream.writeBytes(c_option[3]);
                         outputStream.writeBytes(lineEnd);
                         outputStream.writeBytes(twoHyphens + boundary + lineEnd);
-                        i++;
                     }
+                    if (c_option[4] != null) {
+                        outputStream.writeBytes("Content-Disposition: form-data; name=\"option_4\"" + lineEnd);
+                        outputStream.writeBytes(lineEnd);
+                        outputStream.writeBytes(c_option[4]);
+                        outputStream.writeBytes(lineEnd);
+                        outputStream.writeBytes(twoHyphens + boundary + lineEnd);
+                    }
+                    outputStream.writeBytes("Content-Disposition: form-data; name=\"image\";filename=\"" + image_name + "\"" + lineEnd);
+                    outputStream.writeBytes(lineEnd);
+
+
+                    System.out.println(image_name);
+
+                    fileInputStream = new FileInputStream(image_path2[0]);
+                    bytesAvailable = fileInputStream.available();
+                    bufferSize = Math.min(bytesAvailable, maxBufferSize);
+                    buffer = new byte[bufferSize];
+
+                    bytesRead = fileInputStream.read(buffer, 0, bufferSize);
+
+                    while (bytesRead > 0) {
+                        outputStream.write(buffer, 0, bufferSize);
+                        bytesAvailable = fileInputStream.available();
+                        bufferSize = Math.min(bytesAvailable, maxBufferSize);
+                        bytesRead = fileInputStream.read(buffer, 0, bufferSize);
+                    }
+
+                    outputStream.writeBytes(lineEnd);
+                    outputStream.writeBytes(twoHyphens + boundary + lineEnd);
+
 
                     int HttpResult = httpURLConnection.getResponseCode();
                     System.out.println(HttpResult);
@@ -220,7 +291,19 @@ public class CreateIssuewithImageActivity extends AppCompatActivity {
                             sb.append(line + "\n");
                         }
                         JSONObject jsonObj = new JSONObject(sb.toString());
-                        error =  null;
+                        error = null;
+                        result = jsonObj.getString("message");
+                        System.out.println(result);
+                        return result;
+                    } else {
+                        BufferedReader br = new BufferedReader(new InputStreamReader(httpURLConnection.getErrorStream(), "utf-8"));
+                        String line = null;
+                        while ((line = br.readLine()) != null) {
+                            sb.append(line + "\n");
+                        }
+                        br.close();
+                        System.out.println(sb.toString());
+                        JSONObject jsonObj = new JSONObject(sb.toString());
                         result = jsonObj.getString("message");
                         System.out.println(result);
                         return result;
@@ -246,7 +329,7 @@ public class CreateIssuewithImageActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
             } else {
                 Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(CreateIssuewithImageActivity.this, HomeActivity.class);
+                Intent intent = new Intent(CreateIssuewithOneImageActivity.this, HomeActivity.class);
                 startActivity(intent);
             }
         }
@@ -260,13 +343,10 @@ public class CreateIssuewithImageActivity extends AppCompatActivity {
         if (requestCode == PICK_IMAGE && resultCode == RESULT_OK && data != null && data.getData() != null)
         {
                     Uri uri = data.getData();
-                    if (check == 1) {
+
                         image_path2[0] = getRealPathFromURI(this, uri);
                         imageoption.setImageBitmap(rotate(BitmapFactory.decodeFile(image_path2[0]),90));
-                    } else {
-                        image_path2[1] = getRealPathFromURI(this, uri);
-                        imageoption2.setImageBitmap(rotate(BitmapFactory.decodeFile(image_path2[1]),90));
-                    }
+
 
         }
     }

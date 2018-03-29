@@ -8,6 +8,7 @@ public class IssueModel {
     private int status;
     private String time;
     private String description;
+    private String desc_image;
     private String name;
     private String mail;
     private String image;
@@ -53,6 +54,13 @@ public class IssueModel {
     }
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getDesc_image() {
+        return desc_image;
+    }
+    public void setDesc_image(String desc_image) {
+        this.desc_image = desc_image;
     }
 
     public int getRateID() {

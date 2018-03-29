@@ -45,15 +45,16 @@ import java.net.URL;
  */
 public class DetailsActivity extends AppCompatActivity {
     int rateID,rateUserID;
-    String mail,description,result;
+    String mail,description,result,desc_image;
     int status;
     String[] opt = new String[4];
     int[] optionsID = new int[4];
     int i=0;
-    private ImageView ivphotos,ivphotos2;
+    private ImageView ivphotos,ivphotos2, issueOneimage;
     Bitmap[] bitmaps = new Bitmap[3];
     Bitmap[] rotatedBitmaps = new Bitmap[3];
-    TextView  tvIssueDescription,tvIssueDescriptionOpt,tx,tx2,tx3,tx4;
+    TextView  tvIssueDescription,tvIssueDescriptionOpt,tx,tx2,tx3,tx4,tvIssueOneDesc;
+    TextView issueone_options_1,issueone_options_2,issueone_options_3,issueone_options_4;
     private ProgressDialog dialog;
     Button ivote,ivoteopt;
     int USERID;
@@ -93,6 +94,7 @@ public class DetailsActivity extends AppCompatActivity {
             mail = recipeModel.getMail();
             status = recipeModel.getStatus();
             description = recipeModel.getDescription();
+            desc_image = recipeModel.getDesc_image();
             for (IssueModel.created created1 : recipeModel.getcreatedList()) {
                 opt[i] = created1.getOptions();
                 optionsID[i] = created1.getoptionsID();
@@ -100,7 +102,6 @@ public class DetailsActivity extends AppCompatActivity {
             }
 
         }
-
 
         if(status == 0) {
             if (URLUtil.isValidUrl(opt[0]) && URLUtil.isValidUrl(opt[1])) {
@@ -117,6 +118,10 @@ public class DetailsActivity extends AppCompatActivity {
         else {
             if (URLUtil.isValidUrl(opt[0]) && URLUtil.isValidUrl(opt[1])) {
                 new DownloadImageTask().execute();
+            }
+            else if(URLUtil.isValidUrl(desc_image))
+            {
+                new DownloadOneImageTask().execute();
             }
             else
             {
@@ -218,6 +223,189 @@ public class DetailsActivity extends AppCompatActivity {
                 }
             });
             ivoteopt.setVisibility(View.VISIBLE);
+
+        }
+    }
+
+    private class DownloadOneImageTask extends AsyncTask<String, Void, String> {
+
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialog.show();
+            setContentView(R.layout.activity_issuewithoneimages);
+
+        }
+        protected String doInBackground(String... urls) {
+
+            issueOneimage = (ImageView) findViewById(R.id.issueone_image);
+            tvIssueOneDesc = (TextView) findViewById(R.id.tvIssueOneDesc);
+
+            ivote = (Button) findViewById(R.id.issueVote);
+            ivote.setVisibility(View.GONE);
+
+            tx = (TextView) findViewById(R.id.options_1);
+            tx2 = (TextView) findViewById(R.id.options_2);
+            tx3 = (TextView) findViewById(R.id.options_3);
+            tx4 = (TextView) findViewById(R.id.options_4);
+
+
+
+            try {
+                InputStream in = new java.net.URL(desc_image).openStream();
+                bitmaps[0] = BitmapFactory.decodeStream(in);
+
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inScaled = false;
+
+                int width = bitmaps[0].getWidth();
+                int height = bitmaps[0].getHeight();
+
+                    if (width > height) {
+                        rotatedBitmaps[0] = BITMAP_RESIZER(bitmaps[0]);
+                    } else if (width == height) {
+                        rotatedBitmaps[0] = rotate(bitmaps[0], 90);
+
+                    } else {
+                        rotatedBitmaps[0] = BITMAP_RESIZER(bitmaps[0]);
+
+                    }
+
+                    System.out.println(width + " " + height);
+
+
+
+
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return null;
+        }
+        private Bitmap rotate(Bitmap bm, int rotation) {
+            if (rotation != 0) {
+                Bitmap bmOut;
+                Matrix matrix = new Matrix();
+                matrix.postRotate(rotation);
+                if (bm.getWidth() >= 3024 && bm.getHeight() >= 3024)
+                {
+                    bmOut = Bitmap.createBitmap(bm, 0, 0, bm.getWidth(), bm.getHeight(), matrix, true);
+                    bmOut = BITMAP_RESIZER(bmOut);
+                }
+                else {
+                    bmOut = BITMAP_RESIZER(bm);
+                }
+                return bmOut;
+            }
+            return bm;
+        }
+        public Bitmap BITMAP_RESIZER(Bitmap bitmap) {
+            int newWidth = issueOneimage.getWidth()-20;
+            int newHeight = issueOneimage.getHeight()-20;
+            Bitmap scaledBitmap = Bitmap.createBitmap(newWidth, newHeight, Bitmap.Config.ARGB_8888);
+
+            float ratioX = newWidth / (float) bitmap.getWidth();
+            float ratioY = newHeight / (float) bitmap.getHeight();
+            float middleX = newWidth / 2.0f;
+            float middleY = newHeight / 2.0f;
+
+            Matrix scaleMatrix = new Matrix();
+            scaleMatrix.setScale(ratioX, ratioY, middleX, middleY);
+
+            Canvas canvas = new Canvas(scaledBitmap);
+            canvas.setMatrix(scaleMatrix);
+            canvas.drawBitmap(bitmap, middleX - bitmap.getWidth() / 2, middleY - bitmap.getHeight() / 2, new Paint(Paint.FILTER_BITMAP_FLAG));
+
+            return scaledBitmap;
+
+        }
+        protected void onPostExecute(String result2) {
+            super.onPostExecute(result2);
+            dialog.cancel();
+
+            if(opt[3] == null) {
+                tx.setText(opt[0]);
+                tx2.setText(opt[1]);
+                if(opt[2] == null)
+                {
+                    tx3.setVisibility(View.GONE);
+                }
+                else
+                {
+                    tx3.setText(opt[2]);
+                }
+                tx4.setVisibility(View.GONE);
+            }
+
+            else{
+                tx.setText(opt[0]);
+                tx2.setText(opt[1]);
+                tx3.setText(opt[2]);
+                tx4.setText(opt[3]);
+            }
+
+           issueOneimage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    check = true;
+                    issueOneimage.setSelected(true);
+
+
+                }
+            });
+
+            ivote.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    new JSONTask().execute(URL_TO_HIT);
+                }
+            });
+
+            tx.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    tx.setSelected(true);
+                    tx2.setSelected(false);
+                    tx3.setSelected(false);
+                    tx4.setSelected(false);
+                    options=1;
+                }
+            });
+            tx2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    tx.setSelected(false);
+                    tx2.setSelected(true);
+                    tx3.setSelected(false);
+                    tx4.setSelected(false);
+                    options=2;
+
+                }
+            });
+            tx3.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    tx.setSelected(false);
+                    tx2.setSelected(false);
+                    tx3.setSelected(true);
+                    tx4.setSelected(false);
+                    options=3;
+
+                }
+            });
+            tx4.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    tx.setSelected(false);
+                    tx2.setSelected(false);
+                    tx3.setSelected(false);
+                    tx4.setSelected(true);
+                    options=4;
+                }
+            });
+
+            ivote.setVisibility(View.VISIBLE);
+            tvIssueOneDesc.setText(description);
+
+            issueOneimage.setImageBitmap(rotatedBitmaps[0]);
 
         }
     }

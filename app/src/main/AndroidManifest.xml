@@ -50,6 +50,9 @@
             android:name=".CreateIssuewithImageActivity"
             android:label="CreateIssuewithImageActivity" />
         <activity
+            android:name=".CreateIssuewithOneImageActivity"
+            android:label="CreateIssuewithOneImageActivity" />
+        <activity
             android:name=".DetailsActivity"
             android:label="DetailsActivity" />
         <activity

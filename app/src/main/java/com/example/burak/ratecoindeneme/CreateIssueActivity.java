@@ -1,6 +1,7 @@
 package com.example.burak.ratecoindeneme;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -11,6 +12,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -18,6 +20,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -30,13 +33,14 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Objects;
 
 /**
  * Created by burak on 16.02.2018.
  */
 public class CreateIssueActivity extends AppCompatActivity {
-    String USERID,result;
-    String c_option1,c_option2,c_option3,c_option4,c_option5,c_description;
+    String USERID,result,c_description;;
+    String c_option[] = new String[5];
 
     private LinearLayout mLayout;
     private EditText mEditText;
@@ -45,7 +49,11 @@ public class CreateIssueActivity extends AppCompatActivity {
     EditText ET_DESC_OPTION;
     int iduser;
 
-    //yavuz123
+    EditText textIn;
+    Button buttonAdd;
+    LinearLayout container;
+    TextView reList, info;
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,47 +62,62 @@ public class CreateIssueActivity extends AppCompatActivity {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         iduser = prefs.getInt("USERID",-1);
 
+        textIn = (EditText)findViewById(R.id.textin);
+        buttonAdd = (Button)findViewById(R.id.add);
+        container = (LinearLayout)findViewById(R.id.container);
+        mButton = (Button)findViewById(R.id.createissue);
+
         ET_DESC_OPTION= (EditText)findViewById(R.id.desc_issue);
 
-        mLayout = (LinearLayout) findViewById(R.id.linearLayout);
-        mButton = (Button) findViewById(R.id.button);
-        mEditText = (EditText) findViewById(R.id.editText);
-
-        final String URL_TO_HIT = "http://localapi25.atwebpages.com/android_connect/issue_create.php?id=" +iduser;
-
-        Button but1 = (Button) findViewById(R.id.createissue);
-
-
-        but1.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
+        mButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 new JSONTask().execute();
             }
         });
 
-        mButton.setOnClickListener(new View.OnClickListener() {
+
+        buttonAdd.setOnClickListener(new View.OnClickListener(){
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+            @Override
             public void onClick(View v) {
 
+                if(edittextcount <= 4)
+                {
+                    LayoutInflater layoutInflater =
+                            (LayoutInflater) getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    final View addView = layoutInflater.inflate(R.layout.row, null);
+                    final TextView textOut = (TextView) addView.findViewById(R.id.textout);
+                    textOut.setText(textIn.getText().toString());
 
-                    mLayout.addView(createNewTextView(mEditText.getText().toString()));
-                    mLayout.setId(edittextcount);
-                    final LinearLayout.LayoutParams lparams2 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                    c_option[edittextcount] = textOut.getText().toString();
+                    textOut.setId(edittextcount);
 
-                    Button btnTag = new Button(CreateIssueActivity.this);
-                    btnTag.setLayoutParams(lparams2);
-                    btnTag.setText("-");
-                    btnTag.setId(edittextcount+10);
+                    System.out.println(c_option[edittextcount]);
 
-                    btnTag.setOnClickListener(new View.OnClickListener() {
+                    Button buttonRemove = (Button) addView.findViewById(R.id.remove);
+                    final View.OnClickListener thisListener = new View.OnClickListener() {
                         @Override
-                        public void onClick(View view) {
+                        public void onClick(View v) {
+                            ((LinearLayout) addView.getParent()).removeView(addView);
+                            edittextcount = edittextcount - 1;
 
-                            mLayout.removeAllViews();
-                            edittextcount = 1;
                         }
-                    });
+                    };
+                    if(Objects.equals(textIn.getText().toString(), ""))
+                    {
+                        Toast.makeText(getApplicationContext(), "Fill option!!", Toast.LENGTH_LONG).show();
+                    }
+                    buttonRemove.setOnClickListener(thisListener);
+                    container.addView(addView);
 
-                    mLayout.addView(btnTag);
-                    mEditText.setText("");
+                    textIn.setText("");
+                    edittextcount = edittextcount + 1;
+
+                }
+                else {
+                    Toast.makeText(getApplicationContext(), "No more options!!", Toast.LENGTH_LONG).show();
+                }
             }
         });
     }
@@ -104,9 +127,7 @@ public class CreateIssueActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-
         }
-
         @RequiresApi(api = Build.VERSION_CODES.KITKAT)
         @SuppressWarnings("WrongThread")
         @Override
@@ -114,13 +135,12 @@ public class CreateIssueActivity extends AppCompatActivity {
 
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
-
-            String reg_url = "http://localapi25.atwebpages.com/android_connect/issue_create.php?id=" +iduser;
             StringBuilder sb = new StringBuilder();
             HttpURLConnection httpURLConnection = null;
+            String URL_TO_HIT = "http://localapi25.atwebpages.com/android_connect/issue_create.php?id=" +iduser;
 
             try {
-                URL url = new URL(reg_url);
+                URL url = new URL(URL_TO_HIT);
                 httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setDoOutput(true);
                 httpURLConnection.setRequestProperty("Content-Type", "application/json");
@@ -131,11 +151,11 @@ public class CreateIssueActivity extends AppCompatActivity {
 
                 c_description =ET_DESC_OPTION.getText().toString();
 
-                jsonParam.put("description", c_description);
-                jsonParam.put("option_1", c_option1);
-                jsonParam.put("option_2", c_option2);
-                jsonParam.put("option_3", c_option3);
-                jsonParam.put("option_4", c_option4);
+                jsonParam.put("description",c_description);
+                jsonParam.put("option_1", c_option[1]);
+                jsonParam.put("option_2", c_option[2]);
+                jsonParam.put("option_3", c_option[3]);
+                jsonParam.put("option_4", c_option[4]);
 
                 OutputStreamWriter out = new OutputStreamWriter(httpURLConnection.getOutputStream());
                 System.out.println(jsonParam.toString());
@@ -186,11 +206,6 @@ public class CreateIssueActivity extends AppCompatActivity {
             }
             return null;
         }
-
-        public class Response {
-            public String response_notmatch;
-        }
-
         protected void onPostExecute(String result) {
             if (result != null) {
                 Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
@@ -201,40 +216,4 @@ public class CreateIssueActivity extends AppCompatActivity {
             }
         }
     }
-    @SuppressLint("ResourceType")
-    private EditText createNewTextView(String text) {
-        final LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-
-        EditText textView = new EditText(this);
-
-        lparams.setMargins(230,20,0,-120);
-        textView.setLayoutParams(lparams);
-        textView.setWidth(710);
-        textView.setHint("Options  " + edittextcount);
-        textView.setLayoutParams(lparams);
-        textView.setText(text);
-        textView.setId(edittextcount);
-        System.out.println(textView.getId());
-        if(textView.getId() == 1)
-        {
-            c_option1 = textView.getText().toString();
-        }
-        if(textView.getId() == 2)
-        {
-            c_option2 = textView.getText().toString();
-        }
-        if(textView.getId() == 3)
-        {
-            c_option3 = textView.getText().toString();
-
-        }
-        if(textView.getId() == 4)
-        {
-            c_option4 = textView.getText().toString();
-        }
-        edittextcount = edittextcount+1;
-
-        return textView;
-    }
-
 }

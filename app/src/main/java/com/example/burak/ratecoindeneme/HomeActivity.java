@@ -99,8 +99,8 @@ public class HomeActivity extends AppCompatActivity {
         });
         floatingActionButton2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //TODO something when floating action menu second item clicked
-
+                Intent intent = new Intent(HomeActivity.this, CreateIssuewithOneImageActivity.class);
+                startActivity(intent);
             }
         });
         floatingActionButton3.setOnClickListener(new View.OnClickListener() {
