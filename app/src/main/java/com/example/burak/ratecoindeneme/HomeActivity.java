@@ -154,7 +154,6 @@ public class HomeActivity extends AppCompatActivity {
 
                     for (int j = 0; j < finalObject.getJSONArray("created").length(); j++) {
                         IssueModel.created created = new IssueModel.created();
-
                         created.setoptionsID(finalObject.getJSONArray("created").getJSONObject(j).getInt("optionsID"));
                         created.setOptions(finalObject.getJSONArray("created").getJSONObject(j).getString("options_1"));
                         createdList.add(created);
@@ -246,9 +245,15 @@ public class HomeActivity extends AppCompatActivity {
                 @Override
                 public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
                     Matrix matrix = new Matrix();
-                    matrix.postRotate(90);
-                    System.out.println(loadedImage.getHeight() + " " + loadedImage.getWidth());
+                    System.out.println(loadedImage.getWidth() + " " + loadedImage.getHeight());
                     if(loadedImage.getWidth() == 378*2) {
+                        matrix.postRotate(90);
+                        Bitmap rotatedBitmap = Bitmap.createBitmap(loadedImage, 0, 0, loadedImage.getWidth(), loadedImage.getHeight(), matrix, true);
+                        finalHolder.ivIssueIcon.setImageBitmap(rotatedBitmap);
+                    }
+                    else if(loadedImage.getWidth() >= 648 && loadedImage.getHeight() >= 486)
+                    {
+                        matrix.postRotate(-90);
                         Bitmap rotatedBitmap = Bitmap.createBitmap(loadedImage, 0, 0, loadedImage.getWidth(), loadedImage.getHeight(), matrix, true);
                         finalHolder.ivIssueIcon.setImageBitmap(rotatedBitmap);
                     }

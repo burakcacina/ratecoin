@@ -44,24 +44,20 @@ import java.net.URL;
  * Created by burak on 16.02.2018.
  */
 public class DetailsActivity extends AppCompatActivity {
-    int rateID,rateUserID;
-    String mail,description,result,desc_image;
-    int status;
-    String[] opt = new String[4];
+
+    int rateID,rateUserID,status,USERID,i=0,selected;
     int[] optionsID = new int[4];
-    int i=0;
-    private ImageView ivphotos,ivphotos2, issueOneimage;
+    String mail,description,desc_image,result;
+    String[] opt = new String[4];
     Bitmap[] bitmaps = new Bitmap[3];
     Bitmap[] rotatedBitmaps = new Bitmap[3];
-    TextView  tvIssueDescription,tvIssueDescriptionOpt,tx,tx2,tx3,tx4,tvIssueOneDesc;
-    TextView issueone_options_1,issueone_options_2,issueone_options_3,issueone_options_4;
-    private ProgressDialog dialog;
-    Button ivote,ivoteopt;
-    int USERID;
+    ImageView issueSecondimage, issueFirstimage;
+    TextView issueDescription,option_1,option_2,option_3,option_4,optresult_1,optresult_2,optresult_3,optresult_4;
+    Button issueVoteopt;
     boolean check = false;
-    int options;
-    final String URL_TO_HIT = "http://localapi25.atwebpages.com/android_connect/issue_vote.php?voteid";
-
+    private ProgressDialog dialog;
+    String URL_TO_HIT;
+    IssueModel recipeModel = new IssueModel();
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,14 +76,13 @@ public class DetailsActivity extends AppCompatActivity {
                 .build();
         ImageLoader.getInstance().init(config); // Do it on Application start
 
-
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
          USERID = prefs.getInt("USERID",-1);
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             String json = bundle.getString("issueModel");
-            IssueModel recipeModel = new Gson().fromJson(json, IssueModel.class);
+            recipeModel = new Gson().fromJson(json, IssueModel.class);
 
             rateID = recipeModel.getRateID();
             rateUserID = recipeModel.getid();
@@ -100,19 +95,31 @@ public class DetailsActivity extends AppCompatActivity {
                 optionsID[i] = created1.getoptionsID();
                 i++;
             }
-
         }
+
+        URL_TO_HIT = "http://localapi25.atwebpages.com/android_connect/issue_vote.php?voteid";
 
         if(status == 0) {
             if (URLUtil.isValidUrl(opt[0]) && URLUtil.isValidUrl(opt[1])) {
-                Intent intentUpdate = new Intent(getApplicationContext(),IssueResultActivity.class);
-                startActivity(intentUpdate);
+                Intent intent = new Intent(getApplicationContext(),IssueResultActivity.class);
+                intent.putExtra("issueModel", new Gson().toJson(recipeModel));
+                intent.putExtra("result", 1);  // pass your values and retrieve them in the other Activity using keyName
+                startActivity(intent);
 
+            }
+            else if(URLUtil.isValidUrl(desc_image))
+            {
+                Intent intent = new Intent(getApplicationContext(),IssueResultActivity.class);
+                intent.putExtra("issueModel", new Gson().toJson(recipeModel));
+                intent.putExtra("result", 2);  // pass your values and retrieve them in the other Activity using keyName
+                startActivity(intent);
             }
             else
             {
-                Intent intentUpdate = new Intent(getApplicationContext(),IssueResultActivity.class);
-                startActivity(intentUpdate);
+                Intent intent = new Intent(getApplicationContext(),IssueResultActivity.class);
+                intent.putExtra("issueModel", new Gson().toJson(recipeModel));
+                intent.putExtra("result", 3);  // pass your values and retrieve them in the other Activity using keyName
+                startActivity(intent);
             }
         }
         else {
@@ -138,91 +145,96 @@ public class DetailsActivity extends AppCompatActivity {
         }
         protected String doInBackground(String... urls) {
 
-            tx = (TextView) findViewById(R.id.options_1);
-            tx2 = (TextView) findViewById(R.id.options_2);
-            tx3 = (TextView) findViewById(R.id.options_3);
-            tx4 = (TextView) findViewById(R.id.options_4);
-            tvIssueDescriptionOpt = (TextView) findViewById(R.id.tvIssueDescOpt);
-            ivoteopt = (Button) findViewById(R.id.issueVoteOptions);
-            ivoteopt.setVisibility(View.GONE);
+            option_1 = (TextView) findViewById(R.id.options_1);
+            option_2 = (TextView) findViewById(R.id.options_2);
+            option_3 = (TextView) findViewById(R.id.options_3);
+            option_4 = (TextView) findViewById(R.id.options_4);
+            optresult_1 = (TextView) findViewById(R.id.optresult_1);
+            optresult_2 = (TextView) findViewById(R.id.optresult_2);
+            optresult_3 = (TextView) findViewById(R.id.optresult_3);
+            optresult_4 = (TextView) findViewById(R.id.optresult_4);
+            issueDescription = (TextView) findViewById(R.id.IssueDescription);
+            issueVoteopt = (Button) findViewById(R.id.issueVoteOptions);
+            issueVoteopt.setVisibility(View.GONE);
 
             if(opt[3] == null) {
-                tx.setText(opt[0]);
-                tx2.setText(opt[1]);
+                option_1.setText(opt[0]);
+                option_2.setText(opt[1]);
                 if(opt[2] == null)
                 {
-                    tx3.setVisibility(View.GONE);
+                    option_3.setVisibility(View.GONE);
                 }
                 else
                 {
-                    tx3.setText(opt[2]);
+                    option_3.setText(opt[2]);
                 }
-                tx4.setVisibility(View.GONE);
+                option_4.setVisibility(View.GONE);
             }
 
             else{
-                tx.setText(opt[0]);
-                tx2.setText(opt[1]);
-                tx3.setText(opt[2]);
-                tx4.setText(opt[3]);
+                option_1.setText(opt[0]);
+                option_2.setText(opt[1]);
+                option_3.setText(opt[2]);
+                option_4.setText(opt[3]);
             }
+            issueDescription.setText(description);
 
-             tvIssueDescriptionOpt.setText(description);
 
             return null;
         }
 
         protected void onPostExecute(String result2) {
             super.onPostExecute(result2);
-            tx.setOnClickListener(new View.OnClickListener() {
+
+            option_1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    tx.setSelected(true);
-                    tx2.setSelected(false);
-                    tx3.setSelected(false);
-                    tx4.setSelected(false);
-                    options=1;
+                    option_1.setSelected(true);
+                    option_2.setSelected(false);
+                    option_3.setSelected(false);
+                    option_4.setSelected(false);
+                    selected=1;
                 }
             });
-            tx2.setOnClickListener(new View.OnClickListener() {
+            option_2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    tx.setSelected(false);
-                    tx2.setSelected(true);
-                    tx3.setSelected(false);
-                    tx4.setSelected(false);
-                    options=2;
+                    option_1.setSelected(false);
+                    option_2.setSelected(true);
+                    option_3.setSelected(false);
+                    option_4.setSelected(false);
+                    selected=2;
 
                 }
             });
-            tx3.setOnClickListener(new View.OnClickListener() {
+            option_3.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    tx.setSelected(false);
-                    tx2.setSelected(false);
-                    tx3.setSelected(true);
-                    tx4.setSelected(false);
-                    options=3;
+                    option_1.setSelected(false);
+                    option_2.setSelected(false);
+                    option_3.setSelected(true);
+                    option_4.setSelected(false);
+                    selected=3;
 
                 }
             });
-            tx4.setOnClickListener(new View.OnClickListener() {
+            option_4.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    tx.setSelected(false);
-                    tx2.setSelected(false);
-                    tx3.setSelected(false);
-                    tx4.setSelected(true);
-                    options=4;
+                    option_1.setSelected(false);
+                    option_2.setSelected(false);
+                    option_3.setSelected(false);
+                    option_4.setSelected(true);
+                    selected=4;
                 }
             });
-            ivoteopt.setOnClickListener(new View.OnClickListener() {
+            issueVoteopt.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    new JSONTask().execute(String.valueOf(options));
+                    new JSONTask().execute(String.valueOf(selected));
                 }
             });
-            ivoteopt.setVisibility(View.VISIBLE);
+            issueVoteopt.setVisibility(View.VISIBLE);
 
         }
     }
@@ -237,18 +249,14 @@ public class DetailsActivity extends AppCompatActivity {
         }
         protected String doInBackground(String... urls) {
 
-            issueOneimage = (ImageView) findViewById(R.id.issueone_image);
-            tvIssueOneDesc = (TextView) findViewById(R.id.tvIssueOneDesc);
-
-            ivote = (Button) findViewById(R.id.issueVote);
-            ivote.setVisibility(View.GONE);
-
-            tx = (TextView) findViewById(R.id.options_1);
-            tx2 = (TextView) findViewById(R.id.options_2);
-            tx3 = (TextView) findViewById(R.id.options_3);
-            tx4 = (TextView) findViewById(R.id.options_4);
-
-
+            issueVoteopt = (Button) findViewById(R.id.issueVoteOptions);
+            issueVoteopt.setVisibility(View.GONE);
+            issueFirstimage = (ImageView) findViewById(R.id.issueFirstimage);
+            issueDescription = (TextView) findViewById(R.id.IssueDescription);
+            option_1 = (TextView) findViewById(R.id.options_1);
+            option_2 = (TextView) findViewById(R.id.options_2);
+            option_3 = (TextView) findViewById(R.id.options_3);
+            option_4 = (TextView) findViewById(R.id.options_4);
 
             try {
                 InputStream in = new java.net.URL(desc_image).openStream();
@@ -269,143 +277,99 @@ public class DetailsActivity extends AppCompatActivity {
                         rotatedBitmaps[0] = BITMAP_RESIZER(bitmaps[0]);
 
                     }
-
                     System.out.println(width + " " + height);
-
-
-
-
             } catch (Exception e) {
                 Log.e("Error", e.getMessage());
                 e.printStackTrace();
             }
             return null;
         }
-        private Bitmap rotate(Bitmap bm, int rotation) {
-            if (rotation != 0) {
-                Bitmap bmOut;
-                Matrix matrix = new Matrix();
-                matrix.postRotate(rotation);
-                if (bm.getWidth() >= 3024 && bm.getHeight() >= 3024)
-                {
-                    bmOut = Bitmap.createBitmap(bm, 0, 0, bm.getWidth(), bm.getHeight(), matrix, true);
-                    bmOut = BITMAP_RESIZER(bmOut);
-                }
-                else {
-                    bmOut = BITMAP_RESIZER(bm);
-                }
-                return bmOut;
-            }
-            return bm;
-        }
-        public Bitmap BITMAP_RESIZER(Bitmap bitmap) {
-            int newWidth = issueOneimage.getWidth()-20;
-            int newHeight = issueOneimage.getHeight()-20;
-            Bitmap scaledBitmap = Bitmap.createBitmap(newWidth, newHeight, Bitmap.Config.ARGB_8888);
-
-            float ratioX = newWidth / (float) bitmap.getWidth();
-            float ratioY = newHeight / (float) bitmap.getHeight();
-            float middleX = newWidth / 2.0f;
-            float middleY = newHeight / 2.0f;
-
-            Matrix scaleMatrix = new Matrix();
-            scaleMatrix.setScale(ratioX, ratioY, middleX, middleY);
-
-            Canvas canvas = new Canvas(scaledBitmap);
-            canvas.setMatrix(scaleMatrix);
-            canvas.drawBitmap(bitmap, middleX - bitmap.getWidth() / 2, middleY - bitmap.getHeight() / 2, new Paint(Paint.FILTER_BITMAP_FLAG));
-
-            return scaledBitmap;
-
-        }
         protected void onPostExecute(String result2) {
             super.onPostExecute(result2);
             dialog.cancel();
 
             if(opt[3] == null) {
-                tx.setText(opt[0]);
-                tx2.setText(opt[1]);
+                option_1.setText(opt[0]);
+                option_2.setText(opt[1]);
                 if(opt[2] == null)
                 {
-                    tx3.setVisibility(View.GONE);
+                    option_3.setVisibility(View.GONE);
                 }
                 else
                 {
-                    tx3.setText(opt[2]);
+                    option_3.setText(opt[2]);
                 }
-                tx4.setVisibility(View.GONE);
+                option_4.setVisibility(View.GONE);
             }
 
             else{
-                tx.setText(opt[0]);
-                tx2.setText(opt[1]);
-                tx3.setText(opt[2]);
-                tx4.setText(opt[3]);
+                option_1.setText(opt[0]);
+                option_2.setText(opt[1]);
+                option_3.setText(opt[2]);
+                option_4.setText(opt[3]);
             }
 
-           issueOneimage.setOnClickListener(new View.OnClickListener() {
+            issueFirstimage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     check = true;
-                    issueOneimage.setSelected(true);
-
-
+                    issueFirstimage.setSelected(true);
                 }
             });
 
-            ivote.setOnClickListener(new View.OnClickListener() {
+            issueVoteopt.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     new JSONTask().execute(URL_TO_HIT);
                 }
             });
 
-            tx.setOnClickListener(new View.OnClickListener() {
+            option_1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    tx.setSelected(true);
-                    tx2.setSelected(false);
-                    tx3.setSelected(false);
-                    tx4.setSelected(false);
-                    options=1;
+                    option_1.setSelected(true);
+                    option_2.setSelected(false);
+                    option_3.setSelected(false);
+                    option_4.setSelected(false);
+                    selected=1;
                 }
             });
-            tx2.setOnClickListener(new View.OnClickListener() {
+            option_2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    tx.setSelected(false);
-                    tx2.setSelected(true);
-                    tx3.setSelected(false);
-                    tx4.setSelected(false);
-                    options=2;
+                    option_1.setSelected(false);
+                    option_2.setSelected(true);
+                    option_3.setSelected(false);
+                    option_4.setSelected(false);
+                    selected=2;
 
                 }
             });
-            tx3.setOnClickListener(new View.OnClickListener() {
+            option_3.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    tx.setSelected(false);
-                    tx2.setSelected(false);
-                    tx3.setSelected(true);
-                    tx4.setSelected(false);
-                    options=3;
+                    option_1.setSelected(false);
+                    option_2.setSelected(false);
+                    option_3.setSelected(true);
+                    option_4.setSelected(false);
+                    selected=3;
 
                 }
             });
-            tx4.setOnClickListener(new View.OnClickListener() {
+            option_4.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    tx.setSelected(false);
-                    tx2.setSelected(false);
-                    tx3.setSelected(false);
-                    tx4.setSelected(true);
-                    options=4;
+                    option_1.setSelected(false);
+                    option_2.setSelected(false);
+                    option_3.setSelected(false);
+                    option_4.setSelected(true);
+                    selected=4;
                 }
             });
 
-            ivote.setVisibility(View.VISIBLE);
-            tvIssueOneDesc.setText(description);
 
-            issueOneimage.setImageBitmap(rotatedBitmaps[0]);
+            issueVoteopt.setVisibility(View.VISIBLE);
+            issueDescription.setText(description);
+            issueFirstimage.setImageBitmap(rotatedBitmaps[0]);
 
         }
     }
@@ -421,11 +385,11 @@ public class DetailsActivity extends AppCompatActivity {
         }
         protected Bitmap doInBackground(String... urls) {
 
-            ivphotos = (ImageView) findViewById(R.id.ivphotos);
-            ivphotos2 = (ImageView) findViewById(R.id.ivphotos2);
-            tvIssueDescription = (TextView) findViewById(R.id.tvIssueDesc);
-            ivote = (Button) findViewById(R.id.issueVote);
-            ivote.setVisibility(View.GONE);
+            issueFirstimage = (ImageView) findViewById(R.id.issueFirstimage);
+            issueSecondimage = (ImageView) findViewById(R.id.issueSecondimage);
+            issueDescription = (TextView) findViewById(R.id.IssueDescription);
+            issueVoteopt = (Button) findViewById(R.id.issueVoteOptions);
+            issueVoteopt.setVisibility(View.GONE);
 
             try {
                 InputStream in = new java.net.URL(opt[0]).openStream();
@@ -449,13 +413,10 @@ public class DetailsActivity extends AppCompatActivity {
                     else if(width == height)
                     {
                         rotatedBitmaps[i] = rotate(bitmaps[i], 90);
-
                     }
                     else {
                         rotatedBitmaps[i] = BITMAP_RESIZER(bitmaps[i]);
-
                     }
-
                     System.out.println(width + " " + height);
                 }
 
@@ -466,80 +427,41 @@ public class DetailsActivity extends AppCompatActivity {
             }
             return null;
         }
-        private Bitmap rotate(Bitmap bm, int rotation) {
-            if (rotation != 0) {
-                Bitmap bmOut;
-                Matrix matrix = new Matrix();
-                matrix.postRotate(rotation);
-                if (bm.getWidth() >= 3024 && bm.getHeight() >= 3024)
-                {
-                    bmOut = Bitmap.createBitmap(bm, 0, 0, bm.getWidth(), bm.getHeight(), matrix, true);
-                    bmOut = BITMAP_RESIZER(bmOut);
-                }
-                else {
-                     bmOut = BITMAP_RESIZER(bm);
-                }
-                System.out.println(ivphotos.getWidth() + " " + ivphotos.getHeight());
-                return bmOut;
-            }
-            return bm;
-        }
-        public Bitmap BITMAP_RESIZER(Bitmap bitmap) {
-            int newWidth = ivphotos.getWidth()-20;
-            int newHeight = ivphotos.getHeight()-20;
-            Bitmap scaledBitmap = Bitmap.createBitmap(newWidth, newHeight, Bitmap.Config.ARGB_8888);
 
-            float ratioX = newWidth / (float) bitmap.getWidth();
-            float ratioY = newHeight / (float) bitmap.getHeight();
-            float middleX = newWidth / 2.0f;
-            float middleY = newHeight / 2.0f;
-
-            Matrix scaleMatrix = new Matrix();
-            scaleMatrix.setScale(ratioX, ratioY, middleX, middleY);
-
-            Canvas canvas = new Canvas(scaledBitmap);
-            canvas.setMatrix(scaleMatrix);
-            canvas.drawBitmap(bitmap, middleX - bitmap.getWidth() / 2, middleY - bitmap.getHeight() / 2, new Paint(Paint.FILTER_BITMAP_FLAG));
-
-            return scaledBitmap;
-
-        }
         protected void onPostExecute(Bitmap result) {
             dialog.cancel();
 
-
-            ivphotos.setOnClickListener(new View.OnClickListener() {
+            issueFirstimage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     check = true;
-                    ivphotos.setSelected(true);
-                    ivphotos2.setSelected(false);
+                    issueFirstimage.setSelected(true);
+                    issueSecondimage.setSelected(false);
 
 
                 }
             });
 
-            ivphotos2.setOnClickListener(new View.OnClickListener() {
+            issueSecondimage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     check = false;
-                    ivphotos.setSelected(false);
-                    ivphotos2.setSelected(true);
+                    issueFirstimage.setSelected(false);
+                    issueSecondimage.setSelected(true);
 
                 }
             });
 
-            ivote.setOnClickListener(new View.OnClickListener() {
+            issueVoteopt.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     new JSONTask().execute(URL_TO_HIT);
                 }
             });
 
-            ivote.setVisibility(View.VISIBLE);
-            tvIssueDescription.setText(description);
-
-            ivphotos.setImageBitmap(rotatedBitmaps[0]);
-            ivphotos2.setImageBitmap(rotatedBitmaps[1]);
+            issueVoteopt.setVisibility(View.VISIBLE);
+            issueDescription.setText(description);
+            issueFirstimage.setImageBitmap(rotatedBitmaps[0]);
+            issueSecondimage.setImageBitmap(rotatedBitmaps[1]);
         }
     }
 
@@ -569,7 +491,7 @@ public class DetailsActivity extends AppCompatActivity {
                 jsonParam.put("userID", USERID);
                 jsonParam.put("rateID", rateID);
 
-                if(params[0] == String.valueOf(options))
+                if(params[0] == String.valueOf(selected))
                 {
                     if (params[0].contains("1")) {
                         jsonParam.put("optID", optionsID[0]);
@@ -653,5 +575,41 @@ public class DetailsActivity extends AppCompatActivity {
     }
 
 
+    private Bitmap rotate(Bitmap bm, int rotation) {
+        if (rotation != 0) {
+            Bitmap bmOut;
+            Matrix matrix = new Matrix();
+            matrix.postRotate(rotation);
+            if (bm.getWidth() >= 3024 && bm.getHeight() >= 3024)
+            {
+                bmOut = Bitmap.createBitmap(bm, 0, 0, bm.getWidth(), bm.getHeight(), matrix, true);
+                bmOut = BITMAP_RESIZER(bmOut);
+            }
+            else {
+                bmOut = BITMAP_RESIZER(bm);
+            }
+            return bmOut;
+        }
+        return bm;
+    }
+    public Bitmap BITMAP_RESIZER(Bitmap bitmap) {
+        int newWidth = issueFirstimage.getWidth()-20;
+        int newHeight = issueFirstimage.getHeight()-20;
+        Bitmap scaledBitmap = Bitmap.createBitmap(newWidth, newHeight, Bitmap.Config.ARGB_8888);
 
+        float ratioX = newWidth / (float) bitmap.getWidth();
+        float ratioY = newHeight / (float) bitmap.getHeight();
+        float middleX = newWidth / 2.0f;
+        float middleY = newHeight / 2.0f;
+
+        Matrix scaleMatrix = new Matrix();
+        scaleMatrix.setScale(ratioX, ratioY, middleX, middleY);
+
+        Canvas canvas = new Canvas(scaledBitmap);
+        canvas.setMatrix(scaleMatrix);
+        canvas.drawBitmap(bitmap, middleX - bitmap.getWidth() / 2, middleY - bitmap.getHeight() / 2, new Paint(Paint.FILTER_BITMAP_FLAG));
+
+        return scaledBitmap;
+
+    }
 }

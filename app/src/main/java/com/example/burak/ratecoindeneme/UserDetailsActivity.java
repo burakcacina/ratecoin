@@ -99,7 +99,6 @@ public class UserDetailsActivity extends AppCompatActivity {
                     r.response_usermail = myJson.optString("mail");
                     r.response_userimage =myJson.optString("image");
 
-
                     InputStream in = new java.net.URL(r.response_userimage).openStream();
                     bitmap = BitmapFactory.decodeStream(in);
 
@@ -129,51 +128,54 @@ public class UserDetailsActivity extends AppCompatActivity {
             public String  response_userimage;
 
         }
-        private Bitmap rotate(Bitmap bm, int rotation) {
-            if (rotation != 0) {
-                Bitmap bmOut;
-                Matrix matrix = new Matrix();
-                matrix.postRotate(rotation);
-                if (bm.getWidth() == bm.getHeight() )
-                {
-                    bmOut = Bitmap.createBitmap(bm, 0, 0, bm.getWidth(), bm.getHeight(), matrix, true);
-                    bmOut = BITMAP_RESIZER(bmOut);
-                }
-                else {
-                    bmOut = BITMAP_RESIZER(bm);
-                }
-                return bmOut;
-            }
-            return bm;
-        }
-        public Bitmap BITMAP_RESIZER(Bitmap bitmap) {
-            int newWidth = bitmap.getWidth();
-            int newHeight = bitmap.getHeight();
-            Bitmap scaledBitmap = Bitmap.createBitmap(newWidth, newHeight, Bitmap.Config.ARGB_8888);
-
-            float ratioX = newWidth / (float) bitmap.getWidth();
-            float ratioY = newHeight / (float) bitmap.getHeight();
-            float middleX = newWidth / 2.0f;
-            float middleY = newHeight / 2.0f;
-
-            Matrix scaleMatrix = new Matrix();
-            scaleMatrix.setScale(ratioX, ratioY, middleX, middleY);
-
-            Canvas canvas = new Canvas(scaledBitmap);
-            canvas.setMatrix(scaleMatrix);
-            canvas.drawBitmap(bitmap, middleX - bitmap.getWidth() / 2, middleY - bitmap.getHeight() / 2, new Paint(Paint.FILTER_BITMAP_FLAG));
-
-            return scaledBitmap;
-
-        }
         @SuppressLint("SetTextI18n")
         protected void onPostExecute(final Response r) {
             tvUsername.setText("User: " + r.response_username);
             tvmail.setText("Mail: " + String.valueOf(r.response_usermail));
-            singleImage.setImageBitmap(rotate(bitmap,0));
-
-
-
+            singleImage.setImageBitmap(rotate(bitmap,90));
         }
+    }
+    private Bitmap rotate(Bitmap bm, int rotation) {
+        if (rotation != 0) {
+            Bitmap bmOut;
+            Matrix matrix = new Matrix();
+            if (bm.getWidth() == bm.getHeight() )
+            {
+                matrix.postRotate(90);
+                bmOut = Bitmap.createBitmap(bm, 0, 0, bm.getWidth(), bm.getHeight(), matrix, true);
+                bmOut = BITMAP_RESIZER(bmOut);
+            }
+            else if(bm.getWidth() > bm.getHeight())
+            {
+                matrix.postRotate(-90);
+                bmOut = Bitmap.createBitmap(bm, 0, 0, bm.getWidth(), bm.getHeight(), matrix, true);
+                bmOut = BITMAP_RESIZER(bmOut);
+            }
+            else {
+                bmOut = BITMAP_RESIZER(bm);
+            }
+            return bmOut;
+        }
+        return bm;
+    }
+    public Bitmap BITMAP_RESIZER(Bitmap bitmap) {
+        int newWidth = bitmap.getWidth();
+        int newHeight = bitmap.getHeight();
+        Bitmap scaledBitmap = Bitmap.createBitmap(newWidth, newHeight, Bitmap.Config.ARGB_8888);
+
+        float ratioX = newWidth / (float) bitmap.getWidth();
+        float ratioY = newHeight / (float) bitmap.getHeight();
+        float middleX = newWidth / 2.0f;
+        float middleY = newHeight / 2.0f;
+
+        Matrix scaleMatrix = new Matrix();
+        scaleMatrix.setScale(ratioX, ratioY, middleX, middleY);
+
+        Canvas canvas = new Canvas(scaledBitmap);
+        canvas.setMatrix(scaleMatrix);
+        canvas.drawBitmap(bitmap, middleX - bitmap.getWidth() / 2, middleY - bitmap.getHeight() / 2, new Paint(Paint.FILTER_BITMAP_FLAG));
+
+        return scaledBitmap;
+
     }
 }
