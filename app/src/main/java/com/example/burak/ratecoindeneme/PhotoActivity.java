@@ -1,6 +1,8 @@
 package com.example.burak.ratecoindeneme;
 
 import android.annotation.TargetApi;
+import android.app.Dialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -39,6 +41,11 @@ public class PhotoActivity extends AppCompatActivity {
     String image_path,image_name;
     String URL_TO_HIT;
     int iduser;
+
+    private Uri mCapturedImageURI;
+    private static final int RESULT_LOAD_IMAGE = 1;
+    private static final int REQUEST_IMAGE_CAPTURE = 2;
+
     protected boolean shouldAskPermissions() {
         return (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1);
     }
@@ -64,12 +71,44 @@ public class PhotoActivity extends AppCompatActivity {
         iduser = prefs.getInt("USERID",-1);
 
        URL_TO_HIT = "http://localapi25.atwebpages.com/android_connect/index.php?id=" +iduser;
+        int resultID = 0;
+        Bundle bundle = getIntent().getExtras();
+        if(bundle != null) {
+            resultID = bundle.getInt("result");
+        }
+        if(resultID == 1)
+        {
+            activeGallery();
 
+        }
+        else{
+            activeTakePhoto();
 
-       Intent pickPhoto = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-       startActivityForResult(pickPhoto, 1);//one can be replaced with any action code
+        }
 
+    }
+    private void activeTakePhoto() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            String fileName = "temp.jpg";
+            ContentValues values = new ContentValues();
+            values.put(MediaStore.Images.Media.TITLE, fileName);
+            mCapturedImageURI = getContentResolver()
+                    .insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                            values);
+            takePictureIntent
+                    .putExtra(MediaStore.EXTRA_OUTPUT, mCapturedImageURI);
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        }
+    }
 
+    /**
+     * to gallery
+     */
+    public void activeGallery() {
+        Intent intent = new Intent(Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intent, RESULT_LOAD_IMAGE);
     }
     public class JSONTask extends AsyncTask<String, Void, String> {
 
@@ -174,14 +213,38 @@ public class PhotoActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case RESULT_LOAD_IMAGE:
+                if (requestCode == RESULT_LOAD_IMAGE &&
+                        resultCode == RESULT_OK && null != data) {
+                    Uri selectedImage = data.getData();
+                    String[] filePathColumn = {MediaStore.Images.Media.DATA};
+                    Cursor cursor = getContentResolver()
+                            .query(selectedImage, filePathColumn, null, null,
+                                    null);
+                    cursor.moveToFirst();
+                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                    image_path = cursor.getString(columnIndex);
+                    System.out.println(image_path);
+                    cursor.close();
 
-        if (requestCode == PICK_IMAGE && resultCode == RESULT_OK && data != null && data.getData() != null)
-        {
-            Uri uri = data.getData();
-            image_path=getRealPathFromURI(this,uri);
-
-            new JSONTask().execute(URL_TO_HIT);
+                }
+            case REQUEST_IMAGE_CAPTURE:
+                if (requestCode == REQUEST_IMAGE_CAPTURE &&
+                        resultCode == RESULT_OK) {
+                    String[] projection = {MediaStore.Images.Media.DATA};
+                    Cursor cursor =
+                            managedQuery(mCapturedImageURI, projection, null,
+                                    null, null);
+                    int column_index_data = cursor.getColumnIndexOrThrow(
+                            MediaStore.Images.Media.DATA);
+                    cursor.moveToFirst();
+                    image_path = cursor.getString(column_index_data);
+                    System.out.println(image_path);
+                }
         }
+            new JSONTask().execute(URL_TO_HIT);
+
     }
 
     public String getRealPathFromURI(Context context, Uri contentUri) {

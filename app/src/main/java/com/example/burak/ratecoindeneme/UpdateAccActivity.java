@@ -1,5 +1,6 @@
 package com.example.burak.ratecoindeneme;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.support.annotation.RequiresApi;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -61,8 +63,23 @@ public class UpdateAccActivity extends AppCompatActivity {
         });
         but2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(UpdateAccActivity.this, DeleteUserActivity.class);
-                startActivity(intent);
+                AlertDialog.Builder builder;
+                builder = new AlertDialog.Builder(UpdateAccActivity.this);
+                builder.setTitle("Delete account")
+                        .setMessage("Are you sure you want to delete account?")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent = new Intent(UpdateAccActivity.this, DeleteUserActivity.class);
+                                startActivity(intent);
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // do nothing
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
             }
         });
     }

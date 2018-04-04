@@ -1,6 +1,7 @@
 package com.example.burak.ratecoindeneme;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -58,8 +59,34 @@ public class UserDetailsActivity extends AppCompatActivity {
 
         but1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(UserDetailsActivity.this, PhotoActivity.class);
-                startActivity(intent);
+                final Dialog dialog = new Dialog(UserDetailsActivity.this);
+                dialog.setContentView(R.layout.custom_dialog_box);
+                dialog.setTitle("Alert Dialog View");
+                Button btnExit = (Button) dialog.findViewById(R.id.btnExit);
+                btnExit.setOnClickListener(new View.OnClickListener() {
+                    @Override public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+                dialog.findViewById(R.id.btnChoosePath)
+                        .setOnClickListener(new View.OnClickListener() {
+                            @Override public void onClick(View v) {
+                                Intent intent = new Intent(UserDetailsActivity.this, PhotoActivity.class);
+                                intent.putExtra("result", 1);  // pass your values and retrieve them in the other Activity using keyName
+                                startActivity(intent);
+                            }
+                        });
+                dialog.findViewById(R.id.btnTakePhoto)
+                        .setOnClickListener(new View.OnClickListener() {
+                            @Override public void onClick(View v) {
+                                Intent intent = new Intent(UserDetailsActivity.this, PhotoActivity.class);
+                                intent.putExtra("result", 2);  // pass your values and retrieve them in the other Activity using keyName
+                                startActivity(intent);
+                            }
+                        });
+
+                // show dialog on screen
+                dialog.show();
             }
         });
 
