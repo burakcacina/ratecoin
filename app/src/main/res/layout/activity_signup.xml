@@ -1,58 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/arkaplan">
 
 
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="match_parent"
+        android:layout_height="136dp"
+        app:srcCompat="@drawable/logo" />
 
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Registration Form"
-        android:textAppearance="?android:textAppearanceLarge"
-        android:textStyle="bold"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
-        />
+        android:backgroundTint="@android:color/black"
+        android:text="Registration Form"
+        android:textAppearance="?android:textAppearanceLarge"
+        android:textColor="@android:color/darker_gray"
+        android:textStyle="normal|bold|italic" />
 
     <EditText
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:hint="User Name"
         android:id="@+id/new_user_name"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        />
-    <EditText
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:hint="User Mail"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="@color/blue"
+        android:hint="User Name"
+        android:textStyle="bold|italic" />
+
+    <EditText
         android:id="@+id/new_user_mail"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        />
-    <EditText
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:hint="Password"
-        android:id="@+id/new_user_pass"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
+        android:backgroundTint="@color/blue"
+        android:hint="User Mail"
+        android:textStyle="bold|italic" />
+
+    <EditText
+        android:id="@+id/new_user_pass"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="@color/blue"
+        android:hint="Password"
         android:inputType="textPassword"
-        />
+        android:textStyle="italic" />
 
     <Button
-        android:layout_width="130dp"
+        android:id="@+id/userReg"
+        android:layout_width="252dp"
         android:layout_height="wrap_content"
-        android:text="Register"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="30dp"
-        android:id="@+id/userReg"
-        />
-
-
+        android:backgroundTint="@color/colorPrimary"
+        android:text="REGISTER"
+        android:textColor="@android:color/background_light"
+        android:textStyle="bold|italic" />
 
 
 

@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_height="fill_parent"
+    android:background="@drawable/arkaplan">
 
     <View
         android:layout_width="fill_parent"
@@ -20,10 +21,11 @@
 
     <TextView
         android:id="@+id/IssueDescription"
-        android:layout_width="300dp"
-        android:layout_height="100dp"
+        android:layout_width="303dp"
+        android:layout_height="54dp"
         android:layout_gravity="center"
         android:background="@drawable/rounded_border_edittext"
+        android:backgroundTint="@color/blue"
         android:gravity="center"
         android:text=""
         android:textAppearance="?android:attr/textAppearanceLarge" />
@@ -36,7 +38,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:gravity="center">
+        android:gravity="center"
+        >
 
 
         <ImageView

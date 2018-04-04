@@ -1,8 +1,17 @@
-<LinearLayout android:layout_width="match_parent"
+<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_weight="1"
     android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/arkaplan">
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="match_parent"
+        android:layout_height="209dp"
+        android:paddingTop="70dp"
+        app:srcCompat="@drawable/logo" />
 
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -11,17 +20,26 @@
     android:layout_marginStart="50dp"
     android:layout_marginEnd="50dp">
 
-    <Button
-        android:id="@+id/remove"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:text="Remove"/>
     <AutoCompleteTextView
         android:id="@+id/textout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_toLeftOf="@id/remove"/>
+        android:layout_marginTop="70dp"
+        android:backgroundTint="@color/blue" />
 </RelativeLayout>
+
+    <Button
+        android:id="@+id/remove"
+        android:layout_width="284dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="45dp"
+        android:layout_marginTop="55dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:text="Remove"
+        android:textColor="@android:color/darker_gray"
+        android:textStyle="bold|italic" />
+
+
 </LinearLayout>

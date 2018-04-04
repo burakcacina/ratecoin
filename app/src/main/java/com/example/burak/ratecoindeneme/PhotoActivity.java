@@ -69,6 +69,7 @@ public class PhotoActivity extends AppCompatActivity {
        Intent pickPhoto = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
        startActivityForResult(pickPhoto, 1);//one can be replaced with any action code
 
+
     }
     public class JSONTask extends AsyncTask<String, Void, String> {
 

@@ -6,24 +6,41 @@
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@drawable/arkaplan">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="396dp"
+            android:layout_height="154dp"
+            ads:srcCompat="@drawable/logo" />
 
 
         <Button
             android:id="@+id/userLog"
-            android:layout_width="130dp"
+            android:layout_width="223dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="30dp"
-            android:text="Logın" />
+            android:backgroundTint="@color/colorPrimary"
+            android:text="LOGIN"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:textStyle="bold|italic" />
 
         <Button
             android:id="@+id/userReg"
-            android:layout_width="130dp"
+            android:layout_width="212dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="30dp"
-            android:text="Register" />
+            android:backgroundTint="@color/colorPrimary"
+            android:text="REGISTER"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:textStyle="bold|italic" />
+
+
 
     </LinearLayout>
 
