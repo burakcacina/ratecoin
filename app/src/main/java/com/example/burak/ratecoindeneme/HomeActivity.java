@@ -59,7 +59,7 @@ public class HomeActivity extends AppCompatActivity {
     private ProgressDialog dialog;
     FloatingActionMenu materialDesignFAM;
     FloatingActionButton floatingActionButton1, floatingActionButton2, floatingActionButton3;
-
+//cfdcece
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
