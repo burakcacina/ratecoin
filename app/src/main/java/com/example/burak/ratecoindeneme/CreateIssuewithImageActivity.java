@@ -327,4 +327,9 @@ public class CreateIssuewithImageActivity extends AppCompatActivity {
             }
         }
     }
+    @Override
+    public void onBackPressed() {
+        Intent intentUpdate = new Intent(getApplicationContext(), HomeActivity.class);
+        startActivity(intentUpdate);
+    }
 }

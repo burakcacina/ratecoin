@@ -10,8 +10,7 @@
         android:layout_height="match_parent"
         android:gravity="center_vertical"
         android:orientation="vertical"
-        android:background="@drawable/arkaplan"
-        >
+        android:background="@drawable/arkaplan">
 
         <ImageView
             android:id="@+id/imageView"
@@ -26,7 +25,6 @@
             android:layout_height="39dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp"
-
             android:background="@drawable/rounded_border_edittext"
             android:backgroundTint="@color/colorAccent"
             android:hint="User Name"
@@ -47,7 +45,7 @@
             android:hint="Password"
             android:inputType="textPassword"
             android:textAlignment="center"
-            android:textColor="@color/white"
+            android:textColor="@android:color/black"
             android:textColorHighlight="@android:color/black"
             android:textColorHint="@color/colorPrimary"
             android:textColorLink="@android:color/black"

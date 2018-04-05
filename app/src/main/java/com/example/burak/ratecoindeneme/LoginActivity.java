@@ -101,13 +101,13 @@ public class LoginActivity extends AppCompatActivity {
                     response_id = myJson.optInt("id");
                     System.out.println(response_id);
                 } else {
-                    BufferedReader br = new BufferedReader(new InputStreamReader(httpURLConnection.getErrorStream(), "utf-8"));
+                    BufferedReader br = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream(), "utf-8"));
                     String line = null;
                     while ((line = br.readLine()) != null) {
                         sb.append(line + "\n");
                     }
                     br.close();
-
+                    System.out.println(sb.toString());
                     JSONObject jsonObj = new JSONObject(sb.toString());
                     result = jsonObj.getString("message");
                     System.out.println(result);

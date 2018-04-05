@@ -88,14 +88,14 @@ public class SignupActivity extends AppCompatActivity {
                 user_name =ET_USER_REG_NAME.getText().toString();
                 user_mail =ET_USER_REG_MAIL.getText().toString();
 
-                    jsonParam.put("password", user_pass);
-                    jsonParam.put("username", user_name);
-                    jsonParam.put("mail", user_mail);
+                jsonParam.put("password", user_pass);
+                jsonParam.put("username", user_name);
+                jsonParam.put("mail", user_mail);
 
-                    OutputStreamWriter out = new OutputStreamWriter(httpURLConnection.getOutputStream());
-                    System.out.println(jsonParam);
-                    out.write(jsonParam.toString());
-                    out.close();
+                OutputStreamWriter out = new OutputStreamWriter(httpURLConnection.getOutputStream());
+                System.out.println(jsonParam);
+                out.write(jsonParam.toString());
+                out.close();
 
                 int HttpResult = httpURLConnection.getResponseCode();
                 System.out.println(HttpResult);
@@ -138,7 +138,7 @@ public class SignupActivity extends AppCompatActivity {
                     result = jsonObj.getString("message");
                     System.out.println(result);
                     return result;
-                    }
+                }
 
             } catch (MalformedURLException e) {
 
@@ -164,7 +164,7 @@ public class SignupActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             }
             else  {
-                Toast.makeText(getApplicationContext(), "Account Created", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Account Created / Check your mail!", Toast.LENGTH_LONG).show();
                 Toast.makeText(getApplicationContext(), "Redirecting Login Screen", Toast.LENGTH_LONG).show();
             }
         }

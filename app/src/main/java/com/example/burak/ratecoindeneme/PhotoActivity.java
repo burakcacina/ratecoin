@@ -241,9 +241,10 @@ public class PhotoActivity extends AppCompatActivity {
                     cursor.moveToFirst();
                     image_path = cursor.getString(column_index_data);
                     System.out.println(image_path);
+                    new JSONTask().execute(URL_TO_HIT);
+
                 }
         }
-            new JSONTask().execute(URL_TO_HIT);
 
     }
 

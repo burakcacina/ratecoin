@@ -181,6 +181,12 @@ public class UpdateAccActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         }
+
+    }
+    @Override
+    public void onBackPressed() {
+        Intent intentUpdate = new Intent(getApplicationContext(), HomeActivity.class);
+        startActivity(intentUpdate);
     }
 
 }

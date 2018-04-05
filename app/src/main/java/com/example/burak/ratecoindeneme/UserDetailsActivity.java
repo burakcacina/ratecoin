@@ -1,6 +1,7 @@
 package com.example.burak.ratecoindeneme;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,6 +11,7 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
@@ -38,6 +40,21 @@ public class UserDetailsActivity extends AppCompatActivity {
     private TextView tvUsername;
     private ImageView singleImage;
     private Bitmap bitmap;
+
+
+    protected boolean shouldAskPermissions() {
+        return (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1);
+    }
+
+    @TargetApi(23)
+    protected void askPermissions() {
+        String[] permissions = {
+                "android.permission.READ_EXTERNAL_STORAGE",
+                "android.permission.WRITE_EXTERNAL_STORAGE"
+        };
+        int requestCode = 200;
+        requestPermissions(permissions, requestCode);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +96,10 @@ public class UserDetailsActivity extends AppCompatActivity {
                 dialog.findViewById(R.id.btnTakePhoto)
                         .setOnClickListener(new View.OnClickListener() {
                             @Override public void onClick(View v) {
+                                if (shouldAskPermissions()) {
+                                    askPermissions();
+                                }
+                                askPermissions();
                                 Intent intent = new Intent(UserDetailsActivity.this, PhotoActivity.class);
                                 intent.putExtra("result", 2);  // pass your values and retrieve them in the other Activity using keyName
                                 startActivity(intent);
@@ -204,5 +225,10 @@ public class UserDetailsActivity extends AppCompatActivity {
 
         return scaledBitmap;
 
+    }
+    @Override
+    public void onBackPressed() {
+        Intent intentUpdate = new Intent(getApplicationContext(), HomeActivity.class);
+        startActivity(intentUpdate);
     }
 }

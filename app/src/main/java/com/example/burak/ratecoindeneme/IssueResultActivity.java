@@ -386,14 +386,6 @@ public class IssueResultActivity extends AppCompatActivity {
         }
     }
 
-
-    @Override
-    public void onBackPressed() {
-
-        Intent intentUpdate = new Intent(getApplicationContext(), HomeActivity.class);
-        startActivity(intentUpdate);
-    }
-
     private Bitmap rotate(Bitmap bm, int rotation) {
         if (rotation != 0) {
             Bitmap bmOut;
@@ -431,5 +423,10 @@ public class IssueResultActivity extends AppCompatActivity {
 
         return scaledBitmap;
 
+    }
+    @Override
+    public void onBackPressed() {
+        Intent intentUpdate = new Intent(getApplicationContext(), HomeActivity.class);
+        startActivity(intentUpdate);
     }
 }
