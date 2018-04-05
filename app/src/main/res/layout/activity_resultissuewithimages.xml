@@ -1,81 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@drawable/arkaplan">
-
     <View
         android:layout_width="fill_parent"
         android:layout_height="50dp"></View>
 
-    <TextView
-        android:id="@+id/issueDesc22"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Description"
-        android:gravity="center"
-        android:layout_gravity="center"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="78dp"
+        android:orientation="horizontal">
+
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/user_image"
+                android:layout_width="90dp"
+                android:layout_height="90dp" />
+
+
+        </FrameLayout>
+
+
+        <LinearLayout
+            android:layout_width="250dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/issueOwnerName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text=""
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
 
     <TextView
         android:id="@+id/IssueDescription"
-        android:layout_width="303dp"
-        android:layout_height="54dp"
+        android:layout_width="match_parent"
+        android:layout_height="62dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
         android:layout_gravity="center"
         android:background="@drawable/rounded_border_edittext"
         android:backgroundTint="@color/blue"
         android:gravity="center"
         android:text=""
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@android:color/black"
+        android:textStyle="bold|italic" />
+
 
     <View
         android:layout_width="fill_parent"
-        android:layout_height="50dp"></View>
-
+        android:layout_height="30dp"></View>
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_height="311dp"
         android:gravity="center"
-        >
+        android:orientation="vertical">
 
 
         <ImageView
             android:id="@+id/issueFirstimage"
-            android:layout_width="180dp"
-            android:layout_height="210dp"
-            android:layout_alignParentTop="true"
+            android:layout_width="170dp"
+            android:layout_height="200dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignTop="@+id/issueSecondimage"
             android:layout_gravity="center"
+            android:layout_marginLeft="11dp"
+            android:layout_marginStart="11dp"
             android:adjustViewBounds="true"
-            android:layout_marginStart="20dp"
-            android:layout_marginLeft="20dp"
             android:background="@drawable/my_custom_selector"
-            android:scaleType="centerInside"/>
+            android:scaleType="centerInside" />
 
         <TextView
             android:id="@+id/optresult_1"
             android:layout_width="50dp"
             android:layout_height="55dp"
+            android:layout_alignEnd="@+id/issueFirstimage"
+            android:layout_alignRight="@+id/issueFirstimage"
+            android:layout_below="@+id/issueFirstimage"
+            android:layout_marginEnd="49dp"
+            android:layout_marginRight="49dp"
             android:gravity="center"
-            android:layout_marginLeft="80dp"
             android:text=""
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:layout_below="@+id/issueSecondimage" />
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <ImageView
             android:id="@+id/issueSecondimage"
-            android:layout_width="180dp"
-            android:layout_height="210dp"
+            android:layout_width="170dp"
+            android:layout_height="200dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_marginEnd="20dp"
-            android:layout_alignTop="@+id/issueFirstimage"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="11dp"
+            android:layout_marginRight="11dp"
             android:adjustViewBounds="true"
             android:background="@drawable/my_custom_selector"
-            android:scaleType="centerInside"
-            android:layout_marginRight="20dp" />
+            android:scaleType="centerInside" />
 
         <TextView
             android:id="@+id/optresult_2"

@@ -45,13 +45,13 @@ public class IssueResultActivity extends AppCompatActivity {
 
     int rateID,rateUserID,status,USERID,resultID,i=0;
     int[] optionsID = new int[4];
-    String mail,description,desc_image;
+    String mail,description,desc_image,issueuser_name,issueuser_image;
     String[] opt = new String[4];
     String[] result = new String[5];
     Bitmap[] bitmaps = new Bitmap[3];
     Bitmap[] rotatedBitmaps = new Bitmap[3];
-    ImageView issueSecondimage, issueFirstimage;
-    TextView issueDescription,option_1,option_2,option_3,option_4,optresult_1,optresult_2,optresult_3,optresult_4;
+    ImageView issueSecondimage, issueFirstimage,user_imageissue;
+    TextView issueDescription,option_1,option_2,option_3,option_4,optresult_1,optresult_2,optresult_3,optresult_4,issueOwnerName;
     private ProgressDialog dialog;
     String URL_TO_HIT;
 
@@ -84,6 +84,8 @@ public class IssueResultActivity extends AppCompatActivity {
             status = recipeModel.getStatus();
             description = recipeModel.getDescription();
             desc_image = recipeModel.getDesc_image();
+            issueuser_image=recipeModel.getImage();
+            issueuser_name=recipeModel.getName();
             for (IssueModel.created created1 : recipeModel.getcreatedList()) {
                 opt[i] = created1.getOptions();
                 optionsID[i] = created1.getoptionsID();
@@ -265,9 +267,11 @@ public class IssueResultActivity extends AppCompatActivity {
 
             issueFirstimage = (ImageView) findViewById(R.id.issueFirstimage);
             issueSecondimage = (ImageView) findViewById(R.id.issueSecondimage);
+            user_imageissue = (ImageView) findViewById(R.id.user_image);
             optresult_1 = (TextView) findViewById(R.id.optresult_1);
             optresult_2 = (TextView) findViewById(R.id.optresult_2);
             issueDescription = (TextView) findViewById(R.id.IssueDescription);
+            issueOwnerName = (TextView) findViewById(R.id.issueOwnerName);
 
             try {
 
@@ -290,7 +294,13 @@ public class IssueResultActivity extends AppCompatActivity {
                     } else {
                         rotatedBitmaps[i] = BITMAP_RESIZER(bitmaps[i]);
                     }
+
                 }
+                InputStream in = new java.net.URL(issueuser_image).openStream();
+                bitmaps[2] = BitmapFactory.decodeStream(in);
+                rotatedBitmaps[2] = BITMAP_RESIZER(bitmaps[2]);
+
+
             } catch (Exception e) {
                 Log.e("Error", e.getMessage());
                 e.printStackTrace();
@@ -303,8 +313,10 @@ public class IssueResultActivity extends AppCompatActivity {
             issueDescription.setText(description);
             issueFirstimage.setImageBitmap(rotatedBitmaps[0]);
             issueSecondimage.setImageBitmap(rotatedBitmaps[1]);
+            user_imageissue.setImageBitmap(rotatedBitmaps[2]);
             optresult_1.setText(result[0]);
             optresult_2.setText(result[1]);
+            issueOwnerName.setText(issueuser_name);
         }
     }
 

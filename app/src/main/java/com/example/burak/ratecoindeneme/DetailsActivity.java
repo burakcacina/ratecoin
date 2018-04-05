@@ -47,7 +47,7 @@ public class DetailsActivity extends AppCompatActivity {
 
     int rateID,rateUserID,status,USERID,i=0,selected;
     int[] optionsID = new int[4];
-    String mail,description,desc_image,result;
+    String mail,description,desc_image,result,issueuser_image,issueuser_name;
     String[] opt = new String[4];
     Bitmap[] bitmaps = new Bitmap[3];
     Bitmap[] rotatedBitmaps = new Bitmap[3];
@@ -90,12 +90,16 @@ public class DetailsActivity extends AppCompatActivity {
             status = recipeModel.getStatus();
             description = recipeModel.getDescription();
             desc_image = recipeModel.getDesc_image();
+            issueuser_image=recipeModel.getImage();
+            issueuser_name=recipeModel.getName();
             for (IssueModel.created created1 : recipeModel.getcreatedList()) {
                 opt[i] = created1.getOptions();
                 optionsID[i] = created1.getoptionsID();
                 i++;
             }
         }
+
+
 
         URL_TO_HIT = "http://localapi25.atwebpages.com/android_connect/issue_vote.php?voteid";
 

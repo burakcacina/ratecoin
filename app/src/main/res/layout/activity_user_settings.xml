@@ -18,22 +18,28 @@
     <EditText
         android:id="@+id/user_pass"
         android:layout_width="250dp"
-        android:layout_height="wrap_content"
+        android:layout_height="39dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
+        android:background="@drawable/rounded_border_edittext"
         android:backgroundTint="@color/blue"
         android:hint="Password"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        android:textAlignment="center"
+        android:textColorHint="@color/colorPrimary" />
 
     <EditText
         android:id="@+id/user_pass_confirmation"
         android:layout_width="250dp"
-        android:layout_height="wrap_content"
+        android:layout_height="39dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
+        android:background="@drawable/rounded_border_edittext"
         android:backgroundTint="@color/blue"
         android:hint="Confirm Password"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        android:textAlignment="center"
+        android:textColorHint="@color/colorPrimary" />
 
     <Button
         android:id="@+id/userUpp"
@@ -42,7 +48,8 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="30dp"
         android:backgroundTint="@color/colorPrimary"
-        android:text="Uptade Account" />
+        android:text="Uptade Account"
+        android:background="@drawable/rounded_border_edittext"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -51,8 +58,8 @@
         android:layout_marginTop="20dp"
         android:text="OR"
         android:textAppearance="?android:textAppearanceLarge"
-        android:textColor="@android:color/darker_gray"
-        android:textStyle="bold|italic" />
+        android:textColor="@android:color/black"
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/deleteAccountbutton"
@@ -61,7 +68,8 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="30dp"
         android:backgroundTint="@color/colorPrimary"
-        android:text="Delete Account" />
+        android:text="Delete Account"
+        android:background="@drawable/rounded_border_edittext"/>
 
 
 </LinearLayout>

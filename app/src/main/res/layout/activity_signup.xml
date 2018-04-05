@@ -11,7 +11,8 @@
         android:id="@+id/imageView2"
         android:layout_width="match_parent"
         android:layout_height="136dp"
-        app:srcCompat="@drawable/logo" />
+        app:srcCompat="@drawable/ratelogo"
+        android:layout_gravity="center"/>
 
 
     <TextView
@@ -22,7 +23,7 @@
         android:backgroundTint="@android:color/black"
         android:text="Registration Form"
         android:textAppearance="?android:textAppearanceLarge"
-        android:textColor="@android:color/darker_gray"
+        android:textColor="@android:color/black"
         android:textStyle="normal|bold|italic" />
 
     <EditText
@@ -31,8 +32,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
+        android:background="@drawable/rounded_border_edittext"
         android:backgroundTint="@color/blue"
         android:hint="User Name"
+        android:textColorHint="@color/colorPrimary"
         android:textStyle="bold|italic" />
 
     <EditText
@@ -41,8 +44,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
+        android:background="@drawable/rounded_border_edittext"
         android:backgroundTint="@color/blue"
         android:hint="User Mail"
+        android:textColorHint="@color/colorPrimary"
         android:textStyle="bold|italic" />
 
     <EditText
@@ -51,9 +56,11 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
+        android:background="@drawable/rounded_border_edittext"
         android:backgroundTint="@color/blue"
         android:hint="Password"
         android:inputType="textPassword"
+        android:textColorHint="@color/colorPrimary"
         android:textStyle="italic" />
 
     <Button
@@ -65,6 +72,7 @@
         android:backgroundTint="@color/colorPrimary"
         android:text="REGISTER"
         android:textColor="@android:color/background_light"
+        android:background="@drawable/rounded_border_edittext"
         android:textStyle="bold|italic" />
 
 

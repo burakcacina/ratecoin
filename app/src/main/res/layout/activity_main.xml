@@ -13,15 +13,17 @@
             android:id="@+id/imageView"
             android:layout_width="396dp"
             android:layout_height="154dp"
-            ads:srcCompat="@drawable/logo" />
+            ads:srcCompat="@drawable/ratelogo"
+            android:layout_gravity="center"/>
 
 
         <Button
             android:id="@+id/userLog"
-            android:layout_width="223dp"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="30dp"
+            android:background="@drawable/rounded_border_edittext"
             android:backgroundTint="@color/colorPrimary"
             android:text="LOGIN"
             android:textColor="@color/white"
@@ -30,11 +32,12 @@
 
         <Button
             android:id="@+id/userReg"
-            android:layout_width="212dp"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="30dp"
             android:backgroundTint="@color/colorPrimary"
+            android:background="@drawable/rounded_border_edittext"
             android:text="REGISTER"
             android:textColor="@color/white"
             android:textColorHint="@color/white"
