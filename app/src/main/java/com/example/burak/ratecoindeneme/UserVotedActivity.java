@@ -7,15 +7,10 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -35,9 +30,6 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
-import com.github.clans.fab.FloatingActionButton;
-import com.github.clans.fab.FloatingActionMenu;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -54,11 +46,10 @@ import java.util.List;
 /**
  * Created by burak on 16.02.2018.
  */
-public class HomeActivity extends AppCompatActivity {
+public class UserVotedActivity extends AppCompatActivity {
     private ListView lvIssues;
     private ProgressDialog dialog;
-    FloatingActionMenu materialDesignFAM;
-    FloatingActionButton floatingActionButton1, floatingActionButton2, floatingActionButton3;
+
 //cfdcece
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,35 +71,12 @@ public class HomeActivity extends AppCompatActivity {
 
         lvIssues = (ListView)findViewById(R.id.lvIssues);
 
-        String URL_TO_HIT = "http://localapi25.atwebpages.com/android_connect/issue_details.php";
-        new JSONTask().execute(URL_TO_HIT);
-
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         int USERID = prefs.getInt("USERID",-1);
 
-        materialDesignFAM = (FloatingActionMenu) findViewById(R.id.material_design_android_floating_action_menu);
-        floatingActionButton1 = (FloatingActionButton) findViewById(R.id.material_design_floating_action_menu_item1);
-        floatingActionButton2 = (FloatingActionButton) findViewById(R.id.material_design_floating_action_menu_item2);
-        floatingActionButton3 = (FloatingActionButton) findViewById(R.id.material_design_floating_action_menu_item3);
+        String URL_TO_HIT = "http://localapi25.atwebpages.com/android_connect/issue_uservoted.php?userID=" + USERID;
+        new JSONTask().execute(URL_TO_HIT);
 
-        floatingActionButton1.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent(HomeActivity.this, CreateIssueActivity.class);
-                startActivity(intent);
-            }
-        });
-        floatingActionButton2.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent(HomeActivity.this, CreateIssuewithOneImageActivity.class);
-                startActivity(intent);
-            }
-        });
-        floatingActionButton3.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent(HomeActivity.this, CreateIssuewithImageActivity.class);
-                startActivity(intent);
-            }
-        });
 
     }
 
@@ -132,37 +100,36 @@ public class HomeActivity extends AppCompatActivity {
                 httpURLConnection.setRequestMethod("GET");
                 httpURLConnection.connect(); //Create JSONObject here JSONObject
 
-                BufferedReader br = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream(), "utf-8"));
-                String line = null;
-
-                while ((line = br.readLine()) != null) {
-                    sb.append(line + "\n");
-                }
-
-                br.close();
-
-                List<IssueModel> IssueModelList = new ArrayList<>();
-
-                JSONObject jsonObj = new JSONObject(sb.toString());
-                JSONArray parentArray = jsonObj.getJSONArray("issues");
-                Gson gson = new Gson();
-
-                for(int i=0; i<parentArray.length(); i++) {
-                    JSONObject finalObject = parentArray.getJSONObject(i);
-                    IssueModel IssueModel = gson.fromJson(finalObject.toString(), IssueModel.class);
-                    List<IssueModel.created> createdList = new ArrayList<>();
-
-                    for (int j = 0; j < finalObject.getJSONArray("created").length(); j++) {
-                        IssueModel.created created = new IssueModel.created();
-                        created.setoptionsID(finalObject.getJSONArray("created").getJSONObject(j).getInt("optionsID"));
-                        created.setOptions(finalObject.getJSONArray("created").getJSONObject(j).getString("options_1"));
-                        createdList.add(created);
+                int HttpResult = httpURLConnection.getResponseCode();
+                if (HttpResult == HttpURLConnection.HTTP_OK) {
+                    BufferedReader br = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream(), "utf-8"));
+                    String line = null;
+                    while ((line = br.readLine()) != null) {
+                        sb.append(line + "\n");
                     }
-                    IssueModel.setCreatedList(createdList);
-                    IssueModelList.add(IssueModel);
-                }
-                return IssueModelList;
+                    br.close();
 
+                    List<IssueModel> IssueModelList = new ArrayList<>();
+                    JSONObject jsonObj = new JSONObject(sb.toString());
+                    JSONArray parentArray = jsonObj.getJSONArray("issues");
+                    Gson gson = new Gson();
+
+                    for (int i = 0; i < parentArray.length(); i++) {
+                        JSONObject finalObject = parentArray.getJSONObject(i);
+                        IssueModel IssueModel = gson.fromJson(finalObject.toString(), IssueModel.class);
+                        List<IssueModel.created> createdList = new ArrayList<>();
+
+                        for (int j = 0; j < finalObject.getJSONArray("created").length(); j++) {
+                            IssueModel.created created = new IssueModel.created();
+                            created.setoptionsID(finalObject.getJSONArray("created").getJSONObject(j).getInt("optionsID"));
+                            created.setOptions(finalObject.getJSONArray("created").getJSONObject(j).getString("options_1"));
+                            createdList.add(created);
+                        }
+                        IssueModel.setCreatedList(createdList);
+                        IssueModelList.add(IssueModel);
+                    }
+                    return IssueModelList;
+                }
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -187,14 +154,14 @@ public class HomeActivity extends AppCompatActivity {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         IssueModel IssueModel = result.get(position);
-                        Intent intent = new Intent(HomeActivity.this, DetailsActivity.class);
+                        Intent intent = new Intent(UserVotedActivity.this, DetailsActivity.class);
                         intent.putExtra("issueModel", new Gson().toJson(IssueModel));
-                        intent.putExtra("definePage", 1);  // pass your values and retrieve them in the other Activity using keyName
+                        intent.putExtra("definePage", 3);  // pass your values and retrieve them in the other Activity using keyName
                         startActivity(intent);
                     }
                 });
             } else {
-                Toast.makeText(getApplicationContext(), "Not able to fetch data from server, no internet connection found.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "You did not create any issue!", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -292,39 +259,6 @@ public class HomeActivity extends AppCompatActivity {
             private TextView tvCreated;
             private FrameLayout frma;
         }
-    }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_home, menu);
-        return true;
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        if(item.getItemId() == R.id.action_showuser) {
-            Intent intentUpdate = new Intent(getApplicationContext(),UpdateAccActivity.class);
-            startActivity(intentUpdate);
-        }
-        else if (item.getItemId() == R.id.action_showinfo) {
-            Intent intentUpdate = new Intent(getApplicationContext(),UserDetailsActivity.class);
-            startActivity(intentUpdate);
-        }
-        else if (item.getItemId() == R.id.action_exit) {
-            this.finishAffinity();
-        }
-        else if (item.getItemId() == R.id.user_created) {
-            Intent intentUpdate = new Intent(getApplicationContext(),UserCreatedActivity.class);
-            startActivity(intentUpdate);
-        }
-        else if (item.getItemId() == R.id.user_voted) {
-            Intent intentUpdate = new Intent(getApplicationContext(),UserVotedActivity.class);
-            startActivity(intentUpdate);
-        }
-        return true;
     }
     @Override
     public void onBackPressed() {

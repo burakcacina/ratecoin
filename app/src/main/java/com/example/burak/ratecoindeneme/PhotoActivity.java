@@ -102,14 +102,12 @@ public class PhotoActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * to gallery
-     */
     public void activeGallery() {
         Intent intent = new Intent(Intent.ACTION_PICK,
                 android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(intent, RESULT_LOAD_IMAGE);
     }
+
     public class JSONTask extends AsyncTask<String, Void, String> {
 
         @Override
@@ -215,32 +213,21 @@ public class PhotoActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case RESULT_LOAD_IMAGE:
-                if (requestCode == RESULT_LOAD_IMAGE &&
-                        resultCode == RESULT_OK && null != data) {
-                    Uri selectedImage = data.getData();
-                    String[] filePathColumn = {MediaStore.Images.Media.DATA};
-                    Cursor cursor = getContentResolver()
-                            .query(selectedImage, filePathColumn, null, null,
-                                    null);
-                    cursor.moveToFirst();
-                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                    image_path = cursor.getString(columnIndex);
+                if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
+                    Uri uri = data.getData();
+                    image_path=getRealPathFromURI(this,uri);
                     System.out.println(image_path);
-                    cursor.close();
+                    new JSONTask().execute(URL_TO_HIT);
 
                 }
             case REQUEST_IMAGE_CAPTURE:
-                if (requestCode == REQUEST_IMAGE_CAPTURE &&
-                        resultCode == RESULT_OK) {
+                if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+
                     String[] projection = {MediaStore.Images.Media.DATA};
-                    Cursor cursor =
-                            managedQuery(mCapturedImageURI, projection, null,
-                                    null, null);
-                    int column_index_data = cursor.getColumnIndexOrThrow(
-                            MediaStore.Images.Media.DATA);
+                    Cursor cursor = managedQuery(mCapturedImageURI, projection, null, null, null);
+                    int column_index_data = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
                     cursor.moveToFirst();
                     image_path = cursor.getString(column_index_data);
-                    System.out.println(image_path);
                     new JSONTask().execute(URL_TO_HIT);
 
                 }

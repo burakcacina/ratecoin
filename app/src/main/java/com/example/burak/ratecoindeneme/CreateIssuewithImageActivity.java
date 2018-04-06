@@ -152,6 +152,10 @@ public class CreateIssuewithImageActivity extends AppCompatActivity {
                 {
                     error = "Fill the form.";
                 }
+                else if(image_path2[0].equals(image_path2[1]))
+                {
+                    error = "Same picture, Choose an another picture.";
+                }
                 else {
                     URL url = new URL("http://localapi25.atwebpages.com/android_connect/issue_createimage.php?id=" + iduser);
                     httpURLConnection = (HttpURLConnection) url.openConnection();
@@ -202,30 +206,26 @@ public class CreateIssuewithImageActivity extends AppCompatActivity {
                             bufferSize = Math.min(bytesAvailable, maxBufferSize);
                             bytesRead = fileInputStream.read(buffer, 0, bufferSize);
                         }
-
-
                         outputStream.writeBytes(lineEnd);
                         outputStream.writeBytes(twoHyphens + boundary + lineEnd);
                         i++;
                     }
-
                     int HttpResult = httpURLConnection.getResponseCode();
                     System.out.println(HttpResult);
                     if (HttpResult == HttpURLConnection.HTTP_OK) {
-
-                        BufferedReader br = new BufferedReader(new InputStreamReader(
-                                httpURLConnection.getInputStream(), "utf-8"));
+                        BufferedReader br = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream(), "utf-8"));
                         String line = null;
                         while ((line = br.readLine()) != null) {
                             sb.append(line + "\n");
                         }
+                        System.out.println(sb.toString());
                         JSONObject jsonObj = new JSONObject(sb.toString());
-                        error =  null;
+                        error = null;
                         result = jsonObj.getString("message");
                         System.out.println(result);
-                        return result;
                     }
                 }
+                return result;
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {

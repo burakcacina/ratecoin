@@ -15,6 +15,21 @@
         app:showAsAction="never"
         android:title="User Information"/>
     <item
+        android:id="@+id/user_created"
+        android:orderInCategory="2"
+        app:showAsAction="never"
+        android:title="User Created"/>
+    <item
+        android:id="@+id/user_voted"
+        android:orderInCategory="2"
+        app:showAsAction="never"
+        android:title="User Voted"/>
+    <item
+        android:id="@+id/promotion_list"
+        android:orderInCategory="2"
+        app:showAsAction="never"
+        android:title="Promotion List"/>
+    <item
         android:id="@+id/action_exit"
         android:orderInCategory="5"
         app:showAsAction="never"

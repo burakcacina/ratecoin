@@ -45,7 +45,7 @@ import java.net.URL;
  */
 public class DetailsActivity extends AppCompatActivity {
 
-    int rateID,rateUserID,status,USERID,i=0,selected;
+    int rateID,rateUserID,status,USERID,i=0,selected,definePage;
     int[] optionsID = new int[4];
     String mail,description,desc_image,result,issueuser_image,issueuser_name;
     String[] opt = new String[4];
@@ -82,8 +82,8 @@ public class DetailsActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             String json = bundle.getString("issueModel");
+            definePage = bundle.getInt("definePage");
             recipeModel = new Gson().fromJson(json, IssueModel.class);
-
             rateID = recipeModel.getRateID();
             rateUserID = recipeModel.getid();
             mail = recipeModel.getMail();
@@ -108,6 +108,7 @@ public class DetailsActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(),IssueResultActivity.class);
                 intent.putExtra("issueModel", new Gson().toJson(recipeModel));
                 intent.putExtra("result", 1);  // pass your values and retrieve them in the other Activity using keyName
+                intent.putExtra("definePage", definePage);  // pass your values and retrieve them in the other Activity using keyName
                 startActivity(intent);
 
             }
@@ -116,6 +117,7 @@ public class DetailsActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(),IssueResultActivity.class);
                 intent.putExtra("issueModel", new Gson().toJson(recipeModel));
                 intent.putExtra("result", 2);  // pass your values and retrieve them in the other Activity using keyName
+                intent.putExtra("definePage", definePage);  // pass your values and retrieve them in the other Activity using keyName
                 startActivity(intent);
             }
             else
@@ -123,6 +125,7 @@ public class DetailsActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(),IssueResultActivity.class);
                 intent.putExtra("issueModel", new Gson().toJson(recipeModel));
                 intent.putExtra("result", 3);  // pass your values and retrieve them in the other Activity using keyName
+                intent.putExtra("definePage", definePage);  // pass your values and retrieve them in the other Activity using keyName
                 startActivity(intent);
             }
         }
@@ -618,7 +621,24 @@ public class DetailsActivity extends AppCompatActivity {
     }
     @Override
     public void onBackPressed() {
-        Intent intentUpdate = new Intent(getApplicationContext(), HomeActivity.class);
-        startActivity(intentUpdate);
+        if(definePage == 1)
+        {
+            Intent intentUpdate = new Intent(getApplicationContext(), HomeActivity.class);
+            startActivity(intentUpdate);
+            this.finish();
+        }
+        else if(definePage ==2)
+        {
+            Intent intentUpdate = new Intent(getApplicationContext(), UserCreatedActivity.class);
+            startActivity(intentUpdate);
+            this.finish();
+        }
+        else
+        {
+            Intent intentUpdate = new Intent(getApplicationContext(), UserVotedActivity.class);
+            startActivity(intentUpdate);
+            this.finish();
+        }
+
     }
 }

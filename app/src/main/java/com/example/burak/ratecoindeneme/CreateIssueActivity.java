@@ -33,6 +33,8 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -45,7 +47,7 @@ public class CreateIssueActivity extends AppCompatActivity {
     private LinearLayout mLayout;
     private EditText mEditText;
     private Button mButton;
-    private int edittextcount =1;
+    private int edittextcount =0;
     EditText ET_DESC_OPTION;
     int iduser;
 
@@ -53,6 +55,7 @@ public class CreateIssueActivity extends AppCompatActivity {
     Button buttonAdd;
     LinearLayout container;
     TextView reList, info;
+    List<String> list = new ArrayList<String>();
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,47 +79,47 @@ public class CreateIssueActivity extends AppCompatActivity {
             }
         });
 
-
         buttonAdd.setOnClickListener(new View.OnClickListener(){
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(View v) {
 
-                if(edittextcount <= 4)
-                {
-                    LayoutInflater layoutInflater =
-                            (LayoutInflater) getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                    final View addView = layoutInflater.inflate(R.layout.row, null);
-                    final TextView textOut = (TextView) addView.findViewById(R.id.textout);
-                    textOut.setText(textIn.getText().toString());
+                if (Objects.equals(textIn.getText().toString(), "")) {
+                    Toast.makeText(getApplicationContext(), "Fill option!!", Toast.LENGTH_LONG).show();
+                } else {
+                    if (edittextcount <= 3) {
+                        LayoutInflater layoutInflater =
+                                (LayoutInflater) getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                        final View addView = layoutInflater.inflate(R.layout.row, null);
+                        final TextView textOut = (TextView) addView.findViewById(R.id.textout);
 
-                    c_option[edittextcount] = textOut.getText().toString();
-                    textOut.setId(edittextcount);
+                        list.add(edittextcount, textIn.getText().toString());
 
-                    System.out.println(c_option[edittextcount]);
+                        textOut.setId(edittextcount);
+                        textOut.setText(list.get(edittextcount));
 
-                    Button buttonRemove = (Button) addView.findViewById(R.id.remove);
-                    final View.OnClickListener thisListener = new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            ((LinearLayout) addView.getParent()).removeView(addView);
-                            edittextcount = edittextcount - 1;
+                        System.out.println(list.get(edittextcount));
 
-                        }
-                    };
-                    if(Objects.equals(textIn.getText().toString(), ""))
-                    {
-                        Toast.makeText(getApplicationContext(), "Fill option!!", Toast.LENGTH_LONG).show();
+                        Button buttonRemove = (Button) addView.findViewById(R.id.remove);
+                        final View.OnClickListener thisListener = new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                ((LinearLayout) addView.getParent()).removeView(addView);
+                                edittextcount = edittextcount - 1;
+                                list.remove(edittextcount);
+                                System.out.println(edittextcount);
+                            }
+                        };
+                        buttonRemove.setOnClickListener(thisListener);
+                        container.addView(addView);
+
+                        textIn.setText("");
+                        edittextcount = edittextcount + 1;
+                        System.out.println(edittextcount);
+                        textOut.setKeyListener(null);
+                    } else {
+                        Toast.makeText(getApplicationContext(), "No more options!!", Toast.LENGTH_LONG).show();
                     }
-                    buttonRemove.setOnClickListener(thisListener);
-                    container.addView(addView);
-
-                    textIn.setText("");
-                    edittextcount = edittextcount + 1;
-
-                }
-                else {
-                    Toast.makeText(getApplicationContext(), "No more options!!", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -151,11 +154,18 @@ public class CreateIssueActivity extends AppCompatActivity {
 
                 c_description =ET_DESC_OPTION.getText().toString();
 
+
+                for(int i=0; i<list.size(); i++)
+                {
+                    if(!list.get(i).isEmpty())
+                    {
+                        int sum = i+1;
+                        jsonParam.put("option_"+sum,list.get(i));
+                    }
+                }
+
                 jsonParam.put("description",c_description);
-                jsonParam.put("option_1", c_option[1]);
-                jsonParam.put("option_2", c_option[2]);
-                jsonParam.put("option_3", c_option[3]);
-                jsonParam.put("option_4", c_option[4]);
+
 
                 OutputStreamWriter out = new OutputStreamWriter(httpURLConnection.getOutputStream());
                 System.out.println(jsonParam.toString());

@@ -43,7 +43,7 @@ import java.net.URL;
 
 public class IssueResultActivity extends AppCompatActivity {
 
-    int rateID,rateUserID,status,USERID,resultID,i=0;
+    int rateID,rateUserID,status,USERID,resultID,i=0,definePage;
     int[] optionsID = new int[4];
     String mail,description,desc_image,issueuser_name,issueuser_image;
     String[] opt = new String[4];
@@ -76,6 +76,7 @@ public class IssueResultActivity extends AppCompatActivity {
 
         if(bundle != null){
             resultID = bundle.getInt("result");
+            definePage = bundle.getInt("definePage");
             String json = bundle.getString("issueModel");
             IssueModel recipeModel = new Gson().fromJson(json, IssueModel.class);
             rateID = recipeModel.getRateID();
@@ -195,15 +196,12 @@ public class IssueResultActivity extends AppCompatActivity {
                 int height = bitmaps[0].getHeight();
 
                 if (width > height) {
-                    rotatedBitmaps[0] = BITMAP_RESIZER(bitmaps[0]);
+                    rotatedBitmaps[i] = BITMAP_RESIZER(bitmaps[i]);
                 } else if (width == height) {
-                    rotatedBitmaps[0] = rotate(bitmaps[0], 90);
-
+                    rotatedBitmaps[i] = rotate(bitmaps[i], 90);
                 } else {
-                    rotatedBitmaps[0] = BITMAP_RESIZER(bitmaps[0]);
+                    rotatedBitmaps[i] = BITMAP_RESIZER(bitmaps[i]);
                 }
-
-
             } catch (Exception e) {
                 Log.e("Error", e.getMessage());
                 e.printStackTrace();
@@ -426,7 +424,23 @@ public class IssueResultActivity extends AppCompatActivity {
     }
     @Override
     public void onBackPressed() {
-        Intent intentUpdate = new Intent(getApplicationContext(), HomeActivity.class);
-        startActivity(intentUpdate);
+        if(definePage == 1)
+        {
+            Intent intentUpdate = new Intent(getApplicationContext(), HomeActivity.class);
+            startActivity(intentUpdate);
+            this.finish();
+        }
+        else if(definePage ==2)
+        {
+            Intent intentUpdate = new Intent(getApplicationContext(), UserCreatedActivity.class);
+            startActivity(intentUpdate);
+            this.finish();
+        }
+        else
+        {
+            Intent intentUpdate = new Intent(getApplicationContext(), UserVotedActivity.class);
+            startActivity(intentUpdate);
+            this.finish();
+        }
     }
 }
