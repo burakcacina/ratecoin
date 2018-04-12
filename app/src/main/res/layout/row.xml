@@ -6,28 +6,32 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
 
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginStart="50dp"
-    android:layout_marginEnd="50dp">
-
-    <Button
-            android:id="@+id/remove"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:text="Remove"/>
-
-    <AutoCompleteTextView
-        android:id="@+id/textout"
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_toLeftOf="@id/remove"
-        android:backgroundTint="@color/blue" />
-</RelativeLayout>
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp">
 
+        <Button
+            android:id="@+id/remove"
+            android:layout_width="60dp"
+            android:layout_height="35dp"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/rounded_border_edittext"
+            android:backgroundTint="@color/colorPrimary"
+            android:text="Remove"
+            android:textColor="@color/white"
+            android:textStyle="bold|italic" />
+
+        <AutoCompleteTextView
+            android:id="@+id/textout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@id/remove"
+            android:backgroundTint="@color/blue" />
+
+    </RelativeLayout>
 
 </LinearLayout>

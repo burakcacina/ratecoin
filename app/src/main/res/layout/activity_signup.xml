@@ -29,50 +29,57 @@
     <EditText
         android:id="@+id/new_user_name"
         android:layout_width="250dp"
-        android:layout_height="wrap_content"
+        android:layout_height="39dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
         android:background="@drawable/rounded_border_edittext"
-        android:backgroundTint="@color/blue"
+        android:backgroundTint="@color/colorAccent"
         android:hint="User Name"
+        android:textAlignment="center"
+        android:textColor="@android:color/black"
         android:textColorHint="@color/colorPrimary"
-        android:textStyle="bold|italic" />
+        android:textColorLink="@android:color/black"
+        android:textStyle="italic" />
 
     <EditText
         android:id="@+id/new_user_mail"
         android:layout_width="250dp"
-        android:layout_height="wrap_content"
+        android:layout_height="39dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
         android:background="@drawable/rounded_border_edittext"
-        android:backgroundTint="@color/blue"
+        android:backgroundTint="@color/colorAccent"
         android:hint="User Mail"
         android:textColorHint="@color/colorPrimary"
-        android:textStyle="bold|italic" />
+        android:textStyle="italic"
+        android:gravity="center"/>
 
     <EditText
         android:id="@+id/new_user_pass"
         android:layout_width="250dp"
-        android:layout_height="wrap_content"
+        android:layout_height="39dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
         android:background="@drawable/rounded_border_edittext"
-        android:backgroundTint="@color/blue"
+        android:backgroundTint="@color/colorAccent"
         android:hint="Password"
         android:inputType="textPassword"
+        android:textAlignment="center"
+        android:textColor="@android:color/black"
+        android:textColorHighlight="@android:color/black"
         android:textColorHint="@color/colorPrimary"
+        android:textColorLink="@android:color/black"
         android:textStyle="italic" />
-
     <Button
         android:id="@+id/userReg"
-        android:layout_width="252dp"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="30dp"
+        android:background="@drawable/rounded_border_edittext"
         android:backgroundTint="@color/colorPrimary"
         android:text="REGISTER"
         android:textColor="@android:color/background_light"
-        android:background="@drawable/rounded_border_edittext"
         android:textStyle="bold|italic" />
 
 

@@ -1,38 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:background="@drawable/picture2">
 
     <RelativeLayout
-        android:layout_width="match_parent"
         android:id="@+id/relativeLayout1"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <EditText
             android:id="@+id/desc_issue"
             android:layout_width="309dp"
-            android:layout_height="138dp"
+            android:layout_height="80dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="34dp"
-            android:hint="              Write your question here" />
+            android:hint="              Write your question here"
+            android:textColorLink="@color/Green"
+            android:textStyle="italic" />
     </RelativeLayout>
-
-    <Button
-        android:id="@+id/createissue"
-        android:layout_width="130dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="30dp"
-        android:text="Create" />
 
     <View
         android:layout_width="fill_parent"
-        android:layout_height="20dp">
-    </View>
-
+        android:layout_height="20dp"></View>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -43,22 +36,33 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="50dp"
-            android:layout_marginEnd="50dp">
+            android:layout_marginEnd="50dp"
+            android:layout_marginStart="50dp">
+
 
             <Button
                 android:id="@+id/add"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="60dp"
+                android:layout_height="35dp"
+                android:layout_alignBaseline="@+id/textin"
+                android:layout_alignBottom="@+id/textin"
+                android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:text="Add" />
+                android:background="@drawable/rounded_border_edittext"
+                android:backgroundTint="@color/colorPrimary"
+                android:text="Add"
+                android:textColor="@android:color/background_light"
+                android:textStyle="bold|italic" />
 
             <EditText
                 android:id="@+id/textin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:layout_toLeftOf="@id/add" />
+                android:layout_toLeftOf="@id/add"
+                android:textColorLink="@color/Green" />
+
+
         </RelativeLayout>
 
         <LinearLayout
@@ -66,6 +70,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"></LinearLayout>
+
+
+        <Button
+            android:id="@+id/createissue"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/rounded_border_edittext"
+            android:backgroundTint="@color/colorPrimary"
+            android:text="Create"
+            android:textColor="@android:color/background_light"
+            android:textStyle="bold|italic" />
 
     </LinearLayout>
 

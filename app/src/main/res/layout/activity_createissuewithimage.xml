@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_height="fill_parent"
+    android:background="@drawable/arkaplan2">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -17,16 +19,22 @@
             android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="34dp"
-            android:hint="              Write your question here" />
+            android:hint="              Write your question here"
+            android:textColorLink="@color/Green"
+            android:textStyle="italic" />
     </RelativeLayout>
 
     <Button
         android:id="@+id/createissuewithimage"
-        android:layout_width="130dp"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="30dp"
-        android:text="Create" />
+        android:background="@drawable/rounded_border_edittext"
+        android:backgroundTint="@color/colorPrimary"
+        android:text="CREATE"
+        android:textColor="@color/white"
+        android:textStyle="bold|italic" />
 
     <View
         android:layout_width="fill_parent"

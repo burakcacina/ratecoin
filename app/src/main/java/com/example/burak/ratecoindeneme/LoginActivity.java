@@ -82,8 +82,8 @@ public class LoginActivity extends AppCompatActivity {
                 user_login_name = ET_USER_LOGIN_NAME.getText().toString();
                 user_login_pass = ET_USER_LOGIN_PASS.getText().toString();
 
-                String data2 = URLEncoder.encode("username", "UTF-8") + "=" + URLEncoder.encode(user_login_name, "UTF-8") + "&" +
-                        URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(user_login_pass, "UTF-8");
+                String data2 = URLEncoder.encode("username", "UTF-8") + "=" + URLEncoder.encode("burak", "UTF-8") + "&" +
+                        URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode("burak", "UTF-8");
 
                 OutputStreamWriter out = new OutputStreamWriter(httpURLConnection.getOutputStream());
                 out.write(data2.toString());

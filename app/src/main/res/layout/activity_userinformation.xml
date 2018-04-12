@@ -2,16 +2,22 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/picture2"
     android:gravity="center">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="620dp"
         android:layout_marginBottom="50dp"
+
         android:gravity="center"
         android:orientation="vertical"
         android:padding="50dp"
         android:weightSum="1">
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="60dp"></View>
 
         <ImageView
             android:id="@+id/image1"
@@ -21,37 +27,53 @@
 
         <View
             android:layout_width="fill_parent"
-            android:layout_height="40dp"></View>
+            android:layout_height="60dp"></View>
 
         <TextView
             android:id="@+id/tvuserName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="User Name"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:text="USER NAME"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/Red"
+            android:textColorLink="@color/colorPrimaryDark"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvmail"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Mail"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:text="MAIL"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/Red"
+            android:textColorLink="@color/colorPrimaryDark"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvwallet"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Wallet: 0 RTC "
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:text="WALLET: 0 RTC "
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/Red"
+            android:textColorLink="@color/colorPrimaryDark"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/changeuserphoto"
-            android:layout_width="130dp"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="30dp"
-            android:text="Change Photo" />
+            android:background="@drawable/rounded_border_edittext"
+            android:backgroundTint="@color/colorPrimary"
+            android:text="CHANGE PHOTO"
+            android:textColor="@color/white"
+            android:textStyle="bold|italic" />
 
     </LinearLayout>
 

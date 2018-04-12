@@ -1,37 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_height="fill_parent"
+    android:background="@drawable/picture2"
+    android:orientation="vertical">
 
     <View
         android:layout_width="fill_parent"
-        android:layout_height="40dp">
-    </View>
+        android:layout_height="60dp"></View>
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Description"
-        android:gravity="center"
         android:layout_gravity="center"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:gravity="center"
+        android:text="DESCRIPTION"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/Red"
+        android:textStyle="bold|italic" />
 
     <TextView
         android:id="@+id/IssueDescription"
-        android:layout_width="300dp"
-        android:layout_height="100dp"
+        android:layout_width="427dp"
+        android:layout_height="62dp"
         android:layout_gravity="center"
-        android:background="@drawable/rounded_border_edittext"
+        android:background="@color/colorPrimaryDark"
         android:gravity="center"
         android:text=""
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <View
         android:layout_width="fill_parent"
-        android:layout_height="20dp">
-    </View>
+        android:layout_height="20dp"></View>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -66,10 +67,15 @@
 
     <Button
         android:id="@+id/issueVoteOptions"
-        android:layout_width="130dp"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="30dp"
-        android:text="Vote" />
+        android:layout_marginTop="10dp"
+        android:background="@drawable/rounded_border_edittext"
+        android:backgroundTint="@color/colorPrimary"
+        android:text="VOTE"
+        android:textColor="@color/white"
+        android:textColorLink="@color/Green"
+        android:textStyle="bold|italic" />
 
 </LinearLayout>

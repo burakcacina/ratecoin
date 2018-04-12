@@ -1,75 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
     android:orientation="vertical"
-    android:gravity="center">
+    android:gravity="center"
+    android:background="@drawable/picture2">
+
 
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="431dp"
+        android:layout_height="550dp"
         android:gravity="center"
         android:orientation="vertical">
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="DESCRIPTION"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/Red"
+            android:textStyle="bold"
+            android:layout_marginBottom="20dp"
+            />
+
 
         <TextView
             android:id="@+id/IssueDescription"
-            android:layout_width="300dp"
-            android:layout_height="100dp"
+            android:layout_width="403dp"
+            android:layout_height="66dp"
             android:layout_gravity="center"
-            android:background="@drawable/rounded_border_edittext"
+            android:background="@color/colorPrimaryDark"
             android:gravity="center"
             android:text=""
             android:textAppearance="?android:attr/textAppearanceLarge" />
+
         <View
             android:layout_width="fill_parent"
-            android:layout_height="50dp">
-        </View>
+            android:layout_height="50dp"></View>
 
         <TextView
             android:id="@+id/options_1"
-            android:layout_width="230dp"
-            android:layout_height="55dp"
-            android:background="@drawable/rounded_border_edittext"
+            android:layout_width="502dp"
+            android:layout_height="35dp"
+            android:background="@drawable/my_custom_selector"
             android:ems="10"
             android:gravity="center"
-            android:textSize="20dp"/>
+            android:textSize="20dp"
+            tools:background="@color/colorPrimaryDark" />
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="10dp"></View>
 
         <TextView
             android:id="@+id/options_2"
-            android:layout_width="230dp"
-            android:layout_height="55dp"
-            android:background="@drawable/rounded_border_edittext"
+            android:layout_width="502dp"
+            android:layout_height="35dp"
+            android:background="@drawable/my_custom_selector"
             android:ems="10"
             android:gravity="center"
-            android:textSize="20dp"/>
+            android:textSize="20dp" />
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="10dp"></View>
 
         <TextView
             android:id="@+id/options_3"
-            android:layout_width="230dp"
-            android:layout_height="55dp"
-            android:background="@drawable/rounded_border_edittext"
+            android:layout_width="502dp"
+            android:layout_height="35dp"
+            android:background="@drawable/my_custom_selector"
             android:ems="10"
             android:gravity="center"
-            android:textSize="20dp"/>
+            android:textSize="20dp" />
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="10dp"></View>
 
         <TextView
             android:id="@+id/options_4"
-            android:layout_width="230dp"
-            android:layout_height="55dp"
-            android:background="@drawable/rounded_border_edittext"
+            android:layout_width="502dp"
+            android:layout_height="35dp"
+            android:background="@drawable/my_custom_selector"
             android:ems="10"
             android:gravity="center"
-            android:textSize="20dp"/>
+            android:textSize="20dp" />
 
         <Button
             android:id="@+id/issueVoteOptions"
-            android:layout_width="130dp"
-            android:layout_height="wrap_content"
+            android:layout_width="250dp"
+            android:layout_height="54dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="30dp"
-            android:text="Vote" />
+            android:background="@drawable/rounded_border_edittext"
+            android:backgroundTint="@color/colorPrimary"
+            android:text="VOTE"
+            android:textColor="@color/white"
+            android:textStyle="bold|italic" />
     </LinearLayout>
 
 

@@ -94,7 +94,7 @@ public class IssueResultActivity extends AppCompatActivity {
             }
         }
             URL_TO_HIT = "http://localapi25.atwebpages.com/android_connect/issue_result.php?rateID=" + rateID;
-
+            System.out.println(desc_image);
         if(resultID == 1)
         {
             new DownloadImageTask().execute();
@@ -128,6 +128,8 @@ public class IssueResultActivity extends AppCompatActivity {
             optresult_3 = (TextView) findViewById(R.id.optresult_3);
             optresult_4 = (TextView) findViewById(R.id.optresult_4);
             issueDescription = (TextView) findViewById(R.id.IssueDescription);
+
+
             return null;
         }
 
@@ -159,6 +161,8 @@ public class IssueResultActivity extends AppCompatActivity {
             optresult_2.setText(result[1]);
             optresult_3.setText(result[2]);
             optresult_4.setText(result[3]);
+
+
         }
     }
 
@@ -195,13 +199,18 @@ public class IssueResultActivity extends AppCompatActivity {
                 int width = bitmaps[0].getWidth();
                 int height = bitmaps[0].getHeight();
 
+
+
                 if (width > height) {
-                    rotatedBitmaps[i] = BITMAP_RESIZER(bitmaps[i]);
+                    rotatedBitmaps[0] = BITMAP_RESIZER(bitmaps[i]);
                 } else if (width == height) {
-                    rotatedBitmaps[i] = rotate(bitmaps[i], 90);
+                    rotatedBitmaps[0] = rotate(bitmaps[0], 90);
                 } else {
-                    rotatedBitmaps[i] = BITMAP_RESIZER(bitmaps[i]);
+                    rotatedBitmaps[0] = BITMAP_RESIZER(bitmaps[0]);
                 }
+
+
+
             } catch (Exception e) {
                 Log.e("Error", e.getMessage());
                 e.printStackTrace();
@@ -248,6 +257,7 @@ public class IssueResultActivity extends AppCompatActivity {
             optresult_3.setText(result[2]);
             optresult_4.setText(result[3]);
 
+
         }
     }
 
@@ -265,11 +275,9 @@ public class IssueResultActivity extends AppCompatActivity {
 
             issueFirstimage = (ImageView) findViewById(R.id.issueFirstimage);
             issueSecondimage = (ImageView) findViewById(R.id.issueSecondimage);
-            user_imageissue = (ImageView) findViewById(R.id.user_image);
             optresult_1 = (TextView) findViewById(R.id.optresult_1);
             optresult_2 = (TextView) findViewById(R.id.optresult_2);
             issueDescription = (TextView) findViewById(R.id.IssueDescription);
-            issueOwnerName = (TextView) findViewById(R.id.issueOwnerName);
 
             try {
 
@@ -294,9 +302,6 @@ public class IssueResultActivity extends AppCompatActivity {
                     }
 
                 }
-                InputStream in = new java.net.URL(issueuser_image).openStream();
-                bitmaps[2] = BitmapFactory.decodeStream(in);
-                rotatedBitmaps[2] = BITMAP_RESIZER(bitmaps[2]);
 
 
             } catch (Exception e) {
@@ -311,10 +316,8 @@ public class IssueResultActivity extends AppCompatActivity {
             issueDescription.setText(description);
             issueFirstimage.setImageBitmap(rotatedBitmaps[0]);
             issueSecondimage.setImageBitmap(rotatedBitmaps[1]);
-            user_imageissue.setImageBitmap(rotatedBitmaps[2]);
             optresult_1.setText(result[0]);
             optresult_2.setText(result[1]);
-            issueOwnerName.setText(issueuser_name);
         }
     }
 

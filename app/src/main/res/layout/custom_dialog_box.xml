@@ -1,40 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/arkaplan2"
+    android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:layout_height="fill_parent">
+    android:paddingTop="@dimen/activity_vertical_margin">
 
     <Button
-        android:onClick="btnChoosePathClicked"
         android:id="@+id/btnChoosePath"
-        android:layout_centerHorizontal="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
         android:layout_marginBottom="20dp"
         android:width="200dp"
-        android:text="From Gallery"/>
+        android:background="@drawable/rounded_border_edittext"
+        android:backgroundTint="@color/colorPrimary"
+        android:onClick="btnChoosePathClicked"
+        android:text="From Gallery"
+        android:textColor="@color/colorAccent"
+        android:textStyle="bold"
+        android:layout_marginTop="150dp"/>
 
     <Button
-        android:onClick="btnTakePhotoClicked"
         android:id="@+id/btnTakePhoto"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/btnChoosePath"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/btnChoosePath"
+        android:layout_centerHorizontal="true"
         android:layout_marginBottom="20dp"
         android:width="200dp"
-        android:text="Take Photo"/>
+        android:background="@drawable/rounded_border_edittext"
+        android:backgroundTint="@color/colorPrimary"
+        android:onClick="btnTakePhotoClicked"
+        android:text="Take Photo"
+        android:textColor="@color/colorAccent"
+        android:textStyle="bold" />
 
     <Button
-        android:onClick="btnExitClicked"
         android:id="@+id/btnExit"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/btnTakePhoto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/btnTakePhoto"
+        android:layout_centerHorizontal="true"
         android:width="200dp"
-        android:text="Exit"/>
+        android:background="@drawable/rounded_border_edittext"
+        android:backgroundTint="@color/colorPrimary"
+        android:onClick="btnExitClicked"
+        android:text="Exit"
+        android:textColor="@color/colorAccent"
+        android:textStyle="bold" />
 </RelativeLayout>

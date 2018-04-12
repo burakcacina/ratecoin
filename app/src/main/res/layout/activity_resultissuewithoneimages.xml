@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_height="fill_parent"
+    android:background="@drawable/picture2">
 
     <TextView
         android:id="@+id/issueDesc22"
@@ -15,13 +16,19 @@
 
     <TextView
         android:id="@+id/IssueDescription"
-        android:layout_width="300dp"
+        android:layout_width="566dp"
         android:layout_height="50dp"
         android:layout_gravity="center"
         android:background="@drawable/rounded_border_edittext"
+        android:backgroundTint="@color/colorPrimaryDark"
         android:gravity="center"
         android:text=""
         android:textAppearance="?android:attr/textAppearanceLarge" />
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="15dp">
+    </View>
+
 
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -50,88 +57,99 @@
 
         <TextView
             android:id="@+id/options_1"
-            android:layout_width="250dp"
-            android:layout_height="55dp"
-            android:gravity="center"
+            android:layout_width="280dp"
+            android:layout_height="35dp"
             android:layout_alignParentTop="true"
+            android:layout_marginTop="10dp"
             android:background="@drawable/rounded_border_edittext"
+            android:backgroundTint="@color/colorPrimaryDark"
             android:ems="10"
+            android:gravity="center"
             android:textSize="20dp" />
 
         <TextView
             android:id="@+id/options_2"
-            android:layout_width="250dp"
-            android:layout_height="55dp"
+            android:layout_width="280dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="15dp"
             android:layout_below="@+id/options_1"
             android:background="@drawable/rounded_border_edittext"
+            android:backgroundTint="@color/colorPrimaryDark"
             android:ems="10"
             android:gravity="center"
             android:textSize="20dp" />
 
         <TextView
             android:id="@+id/options_3"
-            android:layout_width="250dp"
-            android:layout_height="55dp"
+            android:layout_width="280dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="15dp"
             android:layout_below="@+id/options_2"
             android:background="@drawable/rounded_border_edittext"
+            android:backgroundTint="@color/colorPrimaryDark"
             android:ems="10"
             android:gravity="center"
             android:textSize="20dp" />
 
         <TextView
             android:id="@+id/options_4"
-            android:layout_width="250dp"
-            android:layout_height="55dp"
+            android:layout_width="280dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="15dp"
             android:layout_below="@+id/options_3"
             android:background="@drawable/rounded_border_edittext"
+            android:backgroundTint="@color/colorPrimaryDark"
             android:ems="10"
             android:gravity="center"
             android:textSize="20dp" />
 
-
         <TextView
             android:id="@+id/optresult_1"
-            android:layout_width="50dp"
-            android:layout_height="55dp"
+            android:layout_width="80dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="2dp"
+            android:layout_alignTop="@id/options_1"
+            android:layout_toEndOf="@+id/options_1"
+            android:layout_toRightOf="@+id/options_1"
             android:gravity="center"
             android:text=""
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:layout_alignTop="@id/options_1"
-            android:layout_toRightOf="@+id/options_1"
-            android:layout_toEndOf="@+id/options_1" />
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <TextView
             android:id="@+id/optresult_2"
-            android:layout_width="50dp"
-            android:layout_height="55dp"
+            android:layout_width="80dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="15dp"
+            android:layout_below="@+id/optresult_1"
+            android:layout_toEndOf="@+id/options_2"
+            android:layout_toRightOf="@+id/options_2"
             android:gravity="center"
             android:text=""
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:layout_below="@+id/optresult_1"
-            android:layout_toRightOf="@+id/options_2"
-            android:layout_toEndOf="@+id/options_2" />
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <TextView
             android:id="@+id/optresult_3"
-            android:layout_width="50dp"
-            android:layout_height="55dp"
+            android:layout_width="80dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/optresult_2"
+            android:layout_toEndOf="@+id/options_3"
+            android:layout_toRightOf="@+id/options_3"
             android:gravity="center"
             android:text=""
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:layout_below="@+id/optresult_2"
-            android:layout_toRightOf="@+id/options_3"
-            android:layout_toEndOf="@+id/options_3" />
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <TextView
             android:id="@+id/optresult_4"
-            android:layout_width="50dp"
-            android:layout_height="55dp"
+            android:layout_width="80dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="17dp"
+            android:layout_below="@+id/optresult_3"
+            android:layout_toEndOf="@+id/options_4"
+            android:layout_toRightOf="@+id/options_4"
             android:gravity="center"
             android:text=""
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:layout_below="@+id/optresult_3"
-            android:layout_toRightOf="@+id/options_4"
-            android:layout_toEndOf="@+id/options_4"/>
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
     </RelativeLayout>
 
