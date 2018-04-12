@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -59,7 +60,7 @@ public class HomeActivity extends AppCompatActivity {
     private ProgressDialog dialog;
     FloatingActionMenu materialDesignFAM;
     FloatingActionButton floatingActionButton1, floatingActionButton2, floatingActionButton3;
-//cfdcece
+    //cfdcece
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
@@ -313,8 +314,9 @@ public class HomeActivity extends AppCompatActivity {
             Intent intentUpdate = new Intent(getApplicationContext(),UserDetailsActivity.class);
             startActivity(intentUpdate);
         }
-        else if (item.getItemId() == R.id.action_exit) {
-            this.finishAffinity();
+        else if (item.getItemId() == R.id.action_logout) {
+            Intent intentUpdate = new Intent(getApplicationContext(),MainActivity.class);
+            startActivity(intentUpdate);
         }
         else if (item.getItemId() == R.id.user_created) {
             Intent intentUpdate = new Intent(getApplicationContext(),UserCreatedActivity.class);
@@ -322,6 +324,10 @@ public class HomeActivity extends AppCompatActivity {
         }
         else if (item.getItemId() == R.id.user_voted) {
             Intent intentUpdate = new Intent(getApplicationContext(),UserVotedActivity.class);
+            startActivity(intentUpdate);
+        }
+        else if (item.getItemId() == R.id.create_wallet) {
+            Intent intentUpdate = new Intent(getApplicationContext(),CreateUserWalletActivity.class);
             startActivity(intentUpdate);
         }
         return true;

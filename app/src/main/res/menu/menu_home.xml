@@ -1,7 +1,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="net.burak.loginupdatesignup.MainActivity">
+    tools:context="net.burak.loginupdatesignup.MainActivity"
+    tools:background="@color/colorPrimary">
 
     <item
         android:id="@+id/action_showuser"
@@ -30,9 +31,14 @@
         app:showAsAction="never"
         android:title="Promotion List"/>
     <item
-        android:id="@+id/action_exit"
+        android:id="@+id/create_wallet"
         android:orderInCategory="5"
         app:showAsAction="never"
-        android:title="Exit"/>
+        android:title="Wallet"/>
+    <item
+        android:id="@+id/action_logout"
+        android:orderInCategory="5"
+        app:showAsAction="never"
+        android:title="Logout"/>
 
 </menu>

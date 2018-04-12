@@ -26,9 +26,6 @@
             android:name=".UpdateAccActivity"
             android:label="Update Account" />
         <activity
-            android:name=".HomeActivity"
-            android:label="Home Page" />
-        <activity
             android:name=".DeleteUserActivity"
             android:label="Delete Account" />
         <activity
@@ -64,6 +61,12 @@
         <activity
             android:name=".UserVotedActivity"
             android:label="UserVoted" />
+        <activity
+            android:name=".HomeActivity"
+            android:label="Home Activity" />
+        <activity
+            android:name=".CreateUserWalletActivity"
+            android:label="Wallet Activity" />
     </application>
 
 </manifest>
