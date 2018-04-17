@@ -2,20 +2,17 @@ package com.example.burak.ratecoindeneme;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.annotation.RequiresApi;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -27,7 +24,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.burak.ratecoindeneme.models.IssueModel;
+import com.example.burak.ratecoindeneme.models.PromotionModel;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.google.gson.Gson;
@@ -53,15 +50,15 @@ import java.util.List;
 /**
  * Created by burak on 16.02.2018.
  */
-public class UserCreatedActivity extends AppCompatActivity {
-    private ListView lvIssues;
+public class PromotionsActivity extends AppCompatActivity {
+    private ListView lvPromotions;
     private ProgressDialog dialog;
-    FloatingActionMenu materialDesignFAM;
+    private TextView tvtotalAmount;
+    int totalcost;
 
-//cfdcece
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_promotions);
 
         dialog = new ProgressDialog(this);
         dialog.setIndeterminate(true);
@@ -77,20 +74,21 @@ public class UserCreatedActivity extends AppCompatActivity {
                 .build();
         ImageLoader.getInstance().init(config); // Do it on Application start
 
-        lvIssues = (ListView)findViewById(R.id.lvIssues);
-        materialDesignFAM = (FloatingActionMenu) findViewById(R.id.material_design_android_floating_action_menu);
-        materialDesignFAM.setVisibility(View.GONE);
+        lvPromotions = (ListView)findViewById(R.id.lvPromotions);
+
+        tvtotalAmount = (TextView) findViewById(R.id.tvtotalAmount);
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         int USERID = prefs.getInt("USERID",-1);
 
-        String URL_TO_HIT = "http://localapi25.atwebpages.com/android_connect/issue_usercreated.php?userID=" + USERID;
-        new JSONTask().execute(URL_TO_HIT);
+        String URL_TO_HIT = "http://localapi25.atwebpages.com/android_connect/promotionList.php?userID=" + USERID;
 
+        System.out.println(URL_TO_HIT);
+        new JSONTask().execute(URL_TO_HIT);
 
     }
 
-    public class JSONTask extends AsyncTask<String,String, List<IssueModel>> {
+    public class JSONTask extends AsyncTask<String, String, List<PromotionModel>> {
 
         @Override
         protected void onPreExecute() {
@@ -99,7 +97,7 @@ public class UserCreatedActivity extends AppCompatActivity {
         }
 
         @Override
-        protected List<IssueModel> doInBackground(String... params) {
+        protected List<PromotionModel> doInBackground(String... params) {
             StringBuilder sb = new StringBuilder();
             HttpURLConnection httpURLConnection = null;
             try {
@@ -109,8 +107,8 @@ public class UserCreatedActivity extends AppCompatActivity {
                 httpURLConnection.setRequestProperty("Content-Type", "application/json");
                 httpURLConnection.setRequestMethod("GET");
                 httpURLConnection.connect(); //Create JSONObject here JSONObject
-
                 int HttpResult = httpURLConnection.getResponseCode();
+                System.out.println(HttpResult);
                 if (HttpResult == HttpURLConnection.HTTP_OK) {
                     BufferedReader br = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream(), "utf-8"));
                     String line = null;
@@ -119,26 +117,26 @@ public class UserCreatedActivity extends AppCompatActivity {
                     }
                     br.close();
 
-                    List<IssueModel> IssueModelList = new ArrayList<>();
+                    List<PromotionModel> PromotionModelList = new ArrayList<>();
+
                     JSONObject jsonObj = new JSONObject(sb.toString());
-                    JSONArray parentArray = jsonObj.getJSONArray("issues");
+                    JSONArray parentArray = jsonObj.getJSONArray("promotions");
                     Gson gson = new Gson();
 
-                    for (int i = 0; i < parentArray.length(); i++) {
+                    for(int i=0; i<parentArray.length(); i++) {
                         JSONObject finalObject = parentArray.getJSONObject(i);
-                        IssueModel IssueModel = gson.fromJson(finalObject.toString(), IssueModel.class);
-                        List<IssueModel.created> createdList = new ArrayList<>();
-
-                        for (int j = 0; j < finalObject.getJSONArray("created").length(); j++) {
-                            IssueModel.created created = new IssueModel.created();
-                            created.setoptionsID(finalObject.getJSONArray("created").getJSONObject(j).getInt("optionsID"));
-                            created.setOptions(finalObject.getJSONArray("created").getJSONObject(j).getString("options_1"));
-                            createdList.add(created);
-                        }
-                        IssueModel.setCreatedList(createdList);
-                        IssueModelList.add(IssueModel);
+                        PromotionModel PromotionModel = gson.fromJson(finalObject.toString(), PromotionModel.class);
+                        PromotionModelList.add(PromotionModel);
                     }
-                    return IssueModelList;
+                    totalcost = jsonObj.getInt("totalcost");
+                    return PromotionModelList;
+                } else {
+                    BufferedReader br = new BufferedReader(new InputStreamReader(httpURLConnection.getErrorStream(), "utf-8"));
+                    String line = null;
+                    while ((line = br.readLine()) != null) {
+                        sb.append(line + "\n");
+                    }
+                    br.close();
                 }
             } catch (MalformedURLException e) {
                 e.printStackTrace();
@@ -154,35 +152,57 @@ public class UserCreatedActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(final List<IssueModel> result) {
+        protected void onPostExecute(final List<PromotionModel> result) {
             super.onPostExecute(result);
             dialog.dismiss();
             if(result != null) {
-                IssueAdapter adapter = new IssueAdapter(getApplicationContext(), R.layout.activity_showissue, result);
-                lvIssues.setAdapter(adapter);
-                lvIssues.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                PromotionAdapter adapter = new PromotionAdapter(getApplicationContext(), R.layout.activity_showpromotions, result);
+                lvPromotions.setAdapter(adapter);
+                tvtotalAmount.setText("Total Cost: " + totalcost +" RTC");
+                lvPromotions.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        IssueModel IssueModel = result.get(position);
-                        Intent intent = new Intent(UserCreatedActivity.this, DetailsActivity.class);
-                        intent.putExtra("issueModel", new Gson().toJson(IssueModel));
-                        intent.putExtra("definePage", 2);  // pass your values and retrieve them in the other Activity using keyName
-                        startActivity(intent);
+                    public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                        AlertDialog.Builder builder;
+                        builder = new AlertDialog.Builder(PromotionsActivity.this);
+                        builder.setTitle("Buy Promotion")
+                                .setMessage("Are you sure you want to buy this promotion?")
+                                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        if(result.get(position).getcost() > totalcost)
+                                        {
+                                            Toast.makeText(getApplicationContext(), "Not Enought RTC", Toast.LENGTH_LONG).show();
+                                        }
+                                        else {
+                                            PromotionModel PromotionModel = result.get(position);
+                                            Intent intent = new Intent(PromotionsActivity.this, PromotionDetailsActivity.class);
+                                            intent.putExtra("promotionModel", new Gson().toJson(PromotionModel));
+                                            startActivity(intent);
+                                        }
+                                    }
+                                })
+                                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        // do nothing
+                                    }
+                                })
+                                .setIcon(android.R.drawable.ic_dialog_alert)
+                                .show();
                     }
                 });
             } else {
-                Toast.makeText(getApplicationContext(), "You did not create any issue!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Not able to fetch data from server, no internet connection found.", Toast.LENGTH_SHORT).show();
+
             }
         }
     }
-    public class IssueAdapter extends ArrayAdapter {
+    public class PromotionAdapter extends ArrayAdapter {
 
-        private List<IssueModel> IssueModelList;
+        private List<PromotionModel> PromotionModelList;
         private int resource;
         private LayoutInflater inflater;
-        public IssueAdapter(Context context, int resource, List<IssueModel> objects) {
+        public PromotionAdapter(Context context, int resource, List<PromotionModel> objects) {
             super(context, resource, objects);
-            IssueModelList = objects;
+            PromotionModelList = objects;
             this.resource = resource;
             inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
         }
@@ -194,21 +214,21 @@ public class UserCreatedActivity extends AppCompatActivity {
             if(convertView == null){
                 holder = new ViewHolder();
                 convertView = inflater.inflate(resource, null);
-                holder.ivIssueIcon = (ImageView)convertView.findViewById(R.id.profile_image);
-                holder.tvIssueName = (TextView)convertView.findViewById(R.id.tvIssueName);
-                holder.tvIssueID = (TextView)convertView.findViewById(R.id.tvIssueID) ;
-                holder.frma = (FrameLayout) convertView.findViewById(R.id.frma);
-                holder.tvCreated = (TextView)convertView.findViewById(R.id.tvCreated);
-
+                holder.ivPro_image = (ImageView)convertView.findViewById(R.id.ivPro_image);
+                holder.tvPro_brand = (TextView)convertView.findViewById(R.id.tvPro_brand);
+                holder.tvPro_description = (TextView)convertView.findViewById(R.id.tvPro_Description) ;
+                holder.tvPro_cost = (TextView)convertView.findViewById(R.id.tvPro_cost);
                 convertView.setTag(holder);
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
 
+
+
             final ProgressBar progressBar = (ProgressBar)convertView.findViewById(R.id.progressBar);
 
             final ViewHolder finalHolder = holder;
-            ImageLoader.getInstance().displayImage(IssueModelList.get(position).getImage(), holder.ivIssueIcon, new ImageLoadingListener() {
+            ImageLoader.getInstance().displayImage(PromotionModelList.get(position).getImage(), holder.ivPro_image, new ImageLoadingListener() {
 
                 @Override
                 public void onLoadingStarted(String imageUri, View view) {
@@ -222,20 +242,8 @@ public class UserCreatedActivity extends AppCompatActivity {
 
                 @Override
                 public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                    Matrix matrix = new Matrix();
-                    System.out.println(loadedImage.getWidth() + " " + loadedImage.getHeight());
-                    if(loadedImage.getWidth() == 378*2) {
-                        matrix.postRotate(90);
-                        Bitmap rotatedBitmap = Bitmap.createBitmap(loadedImage, 0, 0, loadedImage.getWidth(), loadedImage.getHeight(), matrix, true);
-                        finalHolder.ivIssueIcon.setImageBitmap(rotatedBitmap);
-                    }
-                    else if(loadedImage.getWidth() >= 648 && loadedImage.getHeight() >= 486)
-                    {
-                        matrix.postRotate(-90);
-                        Bitmap rotatedBitmap = Bitmap.createBitmap(loadedImage, 0, 0, loadedImage.getWidth(), loadedImage.getHeight(), matrix, true);
-                        finalHolder.ivIssueIcon.setImageBitmap(rotatedBitmap);
-                    }
                     progressBar.setVisibility(View.GONE);
+                    finalHolder.ivPro_image.setImageBitmap(loadedImage);
 
                 }
 
@@ -246,35 +254,25 @@ public class UserCreatedActivity extends AppCompatActivity {
             });
 
 
-            holder.tvIssueName.setText(IssueModelList.get(position).getDescription());
-            holder.tvIssueID.setText("ID: " + IssueModelList.get(position).getRateID());
-            holder.tvCreated.setText("Created: " + IssueModelList.get(position).getName());
-            if(IssueModelList.get(position).getStatus() == 1)
-            {
-                holder.frma.setBackgroundResource(R.color.Green);
+            holder.tvPro_description.setText(PromotionModelList.get(position).getDescription());
+            holder.tvPro_cost.setText("Cost: " + PromotionModelList.get(position).getcost() + " RTC");
+            holder.tvPro_brand.setText("Brand: " + PromotionModelList.get(position).getBrand());
 
-            }
-            else
-            {
-                holder.frma.setBackgroundResource(R.color.Red);
-            }
 
             return convertView;
         }
         class ViewHolder{
-            private ImageView ivIssueIcon;
-            private ImageView ivRecipeIcon2;
-            private TextView tvIssueName;
-            private TextView tvIssueID;
-            private TextView tvCreated;
-            private FrameLayout frma;
+            private ImageView ivPro_image;
+            private TextView tvPro_brand;
+            private TextView tvPro_description;
+            private TextView tvPro_cost;
         }
     }
+
     @Override
     public void onBackPressed() {
         Intent intentUpdate = new Intent(getApplicationContext(), HomeActivity.class);
         startActivity(intentUpdate);
         this.finish();
-
     }
 }

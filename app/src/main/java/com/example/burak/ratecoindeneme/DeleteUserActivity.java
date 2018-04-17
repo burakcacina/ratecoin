@@ -16,7 +16,7 @@ import java.net.URL;
 
 
 public class DeleteUserActivity extends AppCompatActivity {
-    String access_token,response;
+    String response;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.burak.ratecoindeneme.models.IssueModel;
+import com.github.clans.fab.FloatingActionMenu;
 import com.google.gson.Gson;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -49,8 +50,8 @@ import java.util.List;
 public class UserVotedActivity extends AppCompatActivity {
     private ListView lvIssues;
     private ProgressDialog dialog;
+    FloatingActionMenu materialDesignFAM;
 
-//cfdcece
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
@@ -70,6 +71,8 @@ public class UserVotedActivity extends AppCompatActivity {
         ImageLoader.getInstance().init(config); // Do it on Application start
 
         lvIssues = (ListView)findViewById(R.id.lvIssues);
+        materialDesignFAM = (FloatingActionMenu) findViewById(R.id.material_design_android_floating_action_menu);
+        materialDesignFAM.setVisibility(View.GONE);
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         int USERID = prefs.getInt("USERID",-1);

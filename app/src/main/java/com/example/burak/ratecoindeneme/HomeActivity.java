@@ -330,6 +330,10 @@ public class HomeActivity extends AppCompatActivity {
             Intent intentUpdate = new Intent(getApplicationContext(),CreateUserWalletActivity.class);
             startActivity(intentUpdate);
         }
+        else if (item.getItemId() == R.id.promotion_list) {
+            Intent intentUpdate = new Intent(getApplicationContext(),PromotionsActivity.class);
+            startActivity(intentUpdate);
+        }
         return true;
     }
     @Override

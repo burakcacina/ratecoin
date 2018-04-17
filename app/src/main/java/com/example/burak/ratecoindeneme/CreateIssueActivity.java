@@ -42,21 +42,13 @@ import java.util.Objects;
  */
 public class CreateIssueActivity extends AppCompatActivity {
     String USERID,result,c_description;;
-    String c_option[] = new String[5];
-
-    private LinearLayout mLayout;
-    private EditText mEditText;
     private Button mButton;
-    private int edittextcount =0;
-    EditText ET_DESC_OPTION;
-    int iduser;
-
-    EditText textIn;
+    private int edittextcount =0,iduser;
+    EditText ET_DESC_OPTION,textIn;
     Button buttonAdd;
     LinearLayout container;
-    TextView reList, info;
+    TextView info;
     List<String> list = new ArrayList<String>();
-
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

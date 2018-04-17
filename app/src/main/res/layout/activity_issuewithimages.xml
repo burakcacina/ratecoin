@@ -22,8 +22,8 @@
 
     <TextView
         android:id="@+id/IssueDescription"
-        android:layout_width="427dp"
-        android:layout_height="62dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
         android:layout_gravity="center"
         android:background="@color/colorPrimaryDark"
         android:gravity="center"

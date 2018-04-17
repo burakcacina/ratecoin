@@ -37,7 +37,6 @@ import java.net.URL;
 
 public class PhotoActivity extends AppCompatActivity {
 
-    public static final int PICK_IMAGE = 1;
     String image_path,image_name;
     String URL_TO_HIT;
     int iduser;
@@ -70,7 +69,7 @@ public class PhotoActivity extends AppCompatActivity {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         iduser = prefs.getInt("USERID",-1);
 
-       URL_TO_HIT = "http://localapi25.atwebpages.com/android_connect/index.php?id=" +iduser;
+        URL_TO_HIT = "http://localapi25.atwebpages.com/android_connect/index.php?id=" +iduser;
         int resultID = 0;
         Bundle bundle = getIntent().getExtras();
         if(bundle != null) {

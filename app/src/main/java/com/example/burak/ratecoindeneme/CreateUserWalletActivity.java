@@ -39,6 +39,7 @@ public class CreateUserWalletActivity extends AppCompatActivity {
         setContentView(R.layout.activity_walletcreation);
 
         Button but1 = (Button) findViewById(R.id.createWallet);
+        Button but2 = (Button) findViewById(R.id.showWallet);
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         USERID = prefs.getInt("USERID",-1);
@@ -48,6 +49,13 @@ public class CreateUserWalletActivity extends AppCompatActivity {
         but1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 new JSONTask().execute(URL_TO_HIT);
+            }
+        });
+
+        but2.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(CreateUserWalletActivity.this, WalletActivity.class);
+                startActivity(intent);
             }
         });
     }

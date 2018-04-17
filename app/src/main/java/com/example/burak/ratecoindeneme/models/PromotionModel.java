@@ -3,27 +3,24 @@ package com.example.burak.ratecoindeneme.models;
 import java.util.List;
 
 public class PromotionModel {
-    private int promotion_id;
-    private int value;
+    private int id;
+    private int cost;
     private String brand;
     private String description;
     private String image;
 
 
-    public int getPromotion_id() {return promotion_id;}
-    public void setPromotion_id(int id) {
-        this.promotion_id = id;
+    public int getid() {return id;}
+    public void getid(int id) {
+        this.id = id;
     }
 
-
-    public int getValue() {
-        return value;
+    public int getcost() {
+        return cost;
     }
-    public void setValue(int value) {
-        this.value = value;
+    public void setcost(int cost) {
+        this.cost = cost;
     }
-
-
 
     public String getBrand() {
         return brand;
@@ -32,8 +29,6 @@ public class PromotionModel {
         this.brand = brand;
     }
 
-
-
     public String getDescription() {
         return description;
     }
@@ -41,15 +36,12 @@ public class PromotionModel {
         this.description = description;
     }
 
-
-
     public String getImage() {
         return image;
     }
     public void setImage(String image) {
         this.image = image;
     }
-
 
 }
 

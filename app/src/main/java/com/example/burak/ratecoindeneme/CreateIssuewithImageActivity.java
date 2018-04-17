@@ -2,6 +2,7 @@ package com.example.burak.ratecoindeneme;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -55,6 +56,7 @@ public class CreateIssuewithImageActivity extends AppCompatActivity {
     private int edittextcount =1;
     EditText ET_DESC_OPTION;
     int check = 1;
+    private ProgressDialog dialog;
 
     public static final int PICK_IMAGE = 1;
     String[] image_path2 = new String[2];
@@ -62,6 +64,7 @@ public class CreateIssuewithImageActivity extends AppCompatActivity {
     String URL_TO_HIT;
     String description;
     int iduser;
+    boolean created= false;
     protected boolean shouldAskPermissions() {
         return (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1);
     }
@@ -80,6 +83,11 @@ public class CreateIssuewithImageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_createissuewithimage);
+
+        dialog = new ProgressDialog(this);
+        dialog.setIndeterminate(true);
+        dialog.setCancelable(false);
+        dialog.setMessage("Loading. Please wait...");
 
         if (shouldAskPermissions()) {
             askPermissions();
@@ -126,6 +134,7 @@ public class CreateIssuewithImageActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            dialog.show();
         }
 
         @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -147,16 +156,6 @@ public class CreateIssuewithImageActivity extends AppCompatActivity {
             int maxBufferSize = 1024 * 1024;
 
             try {
-
-                if(image_path2[0] == null && image_path2[1] == null)
-                {
-                    error = "Fill the form.";
-                }
-                else if(image_path2[0].equals(image_path2[1]))
-                {
-                    error = "Same picture, Choose an another picture.";
-                }
-                else {
                     URL url = new URL("http://localapi25.atwebpages.com/android_connect/issue_createimage.php?id=" + iduser);
                     httpURLConnection = (HttpURLConnection) url.openConnection();
                     httpURLConnection.setDoInput(true);
@@ -167,48 +166,64 @@ public class CreateIssuewithImageActivity extends AppCompatActivity {
                     httpURLConnection.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
 
                     description = ET_DESC_OPTION.getText().toString();
-                    image_name=image_path2[0].substring(image_path2[0].lastIndexOf("/") + 1);
-                    image_name2=image_path2[1].substring(image_path2[1].lastIndexOf("/") + 1);
 
-                    FileInputStream fileInputStream;
-                    DataOutputStream outputStream;
+                    if(description.equals(""))
+                    {
+                        error = "Fill the description";
+                    }
+                    else if((image_path2[0] == null || image_path2[1] == null))
+                    {
+                         error = "You should add at 2 images";
+                    }
+                    else if(image_path2[0].equals(image_path2[1]))
+                    {
+                        error = "Same picture, Choose an another picture.";
+                    }
+                    else if(image_path2[0] != null && image_path2[1] != null) {
 
-                    outputStream = new DataOutputStream(httpURLConnection.getOutputStream());
-                    outputStream.writeBytes(twoHyphens + boundary + lineEnd);
+                        image_name = image_path2[0].substring(image_path2[0].lastIndexOf("/") + 1);
+                        image_name2 = image_path2[1].substring(image_path2[1].lastIndexOf("/") + 1);
 
-                    outputStream.writeBytes("Content-Disposition: form-data; name=\"description\"" + lineEnd);
-                    outputStream.writeBytes(lineEnd);
-                    outputStream.writeBytes(description);
-                    outputStream.writeBytes(lineEnd);
-                    outputStream.writeBytes(twoHyphens + boundary + lineEnd);
+                        FileInputStream fileInputStream;
+                        DataOutputStream outputStream;
 
-                    for (int k = 0; k < 2; k++) {
+                        outputStream = new DataOutputStream(httpURLConnection.getOutputStream());
+                        outputStream.writeBytes(twoHyphens + boundary + lineEnd);
 
-                        if (k == 0) {
-                            outputStream.writeBytes("Content-Disposition: form-data; name=\"option_1\";filename=\"" + image_name + "\"" + lineEnd);
-                        } else {
-                            outputStream.writeBytes("Content-Disposition: form-data; name=\"option_2\";filename=\"" + image_name2 + "\"" + lineEnd);
-                        }
+                        outputStream.writeBytes("Content-Disposition: form-data; name=\"description\"" + lineEnd);
                         outputStream.writeBytes(lineEnd);
-
-                        System.out.println(image_path2[k]);
-
-                        fileInputStream = new FileInputStream(image_path2[k]);
-                        bytesAvailable = fileInputStream.available();
-                        bufferSize = Math.min(bytesAvailable, maxBufferSize);
-                        buffer = new byte[bufferSize];
-
-                        bytesRead = fileInputStream.read(buffer, 0, bufferSize);
-
-                        while (bytesRead > 0) {
-                            outputStream.write(buffer, 0, bufferSize);
-                            bytesAvailable = fileInputStream.available();
-                            bufferSize = Math.min(bytesAvailable, maxBufferSize);
-                            bytesRead = fileInputStream.read(buffer, 0, bufferSize);
-                        }
+                        outputStream.writeBytes(description);
                         outputStream.writeBytes(lineEnd);
                         outputStream.writeBytes(twoHyphens + boundary + lineEnd);
-                        i++;
+
+                        for (int k = 0; k < 2; k++) {
+
+                            if (k == 0) {
+                                outputStream.writeBytes("Content-Disposition: form-data; name=\"option_1\";filename=\"" + image_name + "\"" + lineEnd);
+                            } else {
+                                outputStream.writeBytes("Content-Disposition: form-data; name=\"option_2\";filename=\"" + image_name2 + "\"" + lineEnd);
+                            }
+                            outputStream.writeBytes(lineEnd);
+
+                            System.out.println(image_path2[k]);
+
+                            fileInputStream = new FileInputStream(image_path2[k]);
+                            bytesAvailable = fileInputStream.available();
+                            bufferSize = Math.min(bytesAvailable, maxBufferSize);
+                            buffer = new byte[bufferSize];
+
+                            bytesRead = fileInputStream.read(buffer, 0, bufferSize);
+
+                            while (bytesRead > 0) {
+                                outputStream.write(buffer, 0, bufferSize);
+                                bytesAvailable = fileInputStream.available();
+                                bufferSize = Math.min(bytesAvailable, maxBufferSize);
+                                bytesRead = fileInputStream.read(buffer, 0, bufferSize);
+                            }
+                            outputStream.writeBytes(lineEnd);
+                            outputStream.writeBytes(twoHyphens + boundary + lineEnd);
+                            i++;
+                        }
                     }
                     int HttpResult = httpURLConnection.getResponseCode();
                     System.out.println(HttpResult);
@@ -218,18 +233,25 @@ public class CreateIssuewithImageActivity extends AppCompatActivity {
                         while ((line = br.readLine()) != null) {
                             sb.append(line + "\n");
                         }
-                        System.out.println(sb.toString());
-                        JSONObject jsonObj = new JSONObject(sb.toString());
                         error = null;
+                        result = null;
+                    }
+                    else {
+                        BufferedReader br = new BufferedReader(new InputStreamReader(httpURLConnection.getErrorStream(), "utf-8"));
+                        String line = null;
+                        while ((line = br.readLine()) != null) {
+                            sb.append(line + "\n");
+                        }
+                        br.close();
+                        JSONObject jsonObj = new JSONObject(sb.toString());
                         result = jsonObj.getString("message");
                         System.out.println(result);
                     }
-                }
+
                 return result;
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {
-
                 e.printStackTrace();
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -242,10 +264,15 @@ public class CreateIssuewithImageActivity extends AppCompatActivity {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
 
-            if (error != null) {
+            if(result != null && error != null)
+            {
                 Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
-            } else {
+            }
+            else if (result != null) {
                 Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+            }
+            else {
+                Toast.makeText(getApplicationContext(), "Issue successfully created.", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(CreateIssuewithImageActivity.this, HomeActivity.class);
                 startActivity(intent);
             }

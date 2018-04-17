@@ -59,6 +59,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
+                android:hint="Add Options here"
                 android:layout_toLeftOf="@id/add"
                 android:textColorLink="@color/Green" />
 

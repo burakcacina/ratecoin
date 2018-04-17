@@ -19,12 +19,11 @@
 
     <TextView
         android:id="@+id/IssueDescription"
-        android:layout_width="566dp"
+        android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_gravity="center"
         android:background="@color/colorPrimaryDark"
         android:gravity="center"
-        android:text=""
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColorLink="@color/Green" />
 
@@ -87,8 +86,7 @@
             android:id="@+id/options_3"
             android:layout_width="452dp"
             android:layout_height="35dp"
-            android:background="@drawable/rounded_border_edittext"
-            android:backgroundTint="@color/colorPrimaryDark"
+            android:background="@drawable/my_custom_selector"
             android:ems="10"
             android:gravity="center"
             android:textSize="20dp" />
@@ -102,7 +100,6 @@
             android:layout_width="452dp"
             android:layout_height="35dp"
             android:background="@drawable/my_custom_selector"
-            android:backgroundTint="@color/colorPrimaryDark"
             android:ems="10"
             android:gravity="center"
             android:textSize="20dp" />

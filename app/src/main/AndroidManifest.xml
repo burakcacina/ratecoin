@@ -67,6 +67,15 @@
         <activity
             android:name=".CreateUserWalletActivity"
             android:label="Wallet Activity" />
+        <activity
+            android:name=".WalletActivity"
+            android:label="Wallet Actions Activity" />
+        <activity
+            android:name=".PromotionsActivity"
+            android:label="Promotions list" />
+        <activity
+            android:name=".PromotionDetailsActivity"
+            android:label="Promotion Details" />
     </application>
 
 </manifest>

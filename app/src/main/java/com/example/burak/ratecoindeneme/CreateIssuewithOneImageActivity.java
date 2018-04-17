@@ -250,8 +250,22 @@ public class CreateIssuewithOneImageActivity extends AppCompatActivity {
             int maxBufferSize = 1024 * 1024;
 
             try {
+                URL url = new URL(URL_TO_HIT);
+                httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setDoInput(true);
+                httpURLConnection.setDoOutput(true);
+                httpURLConnection.setUseCaches(false);
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setRequestProperty("httpURLConnection", "Keep-Alive");
+                httpURLConnection.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
 
-                if(image_path == null)
+                description = ET_DESC_OPTION.getText().toString();
+
+                if(description.equals(""))
+                {
+                    error = "Fill the description";
+                }
+                else if(image_path == null)
                 {
                     error = "Choose an image from gallery.";
                 }
@@ -261,16 +275,6 @@ public class CreateIssuewithOneImageActivity extends AppCompatActivity {
                 }
                 else
                 {
-                    URL url = new URL(URL_TO_HIT);
-                    httpURLConnection = (HttpURLConnection) url.openConnection();
-                    httpURLConnection.setDoInput(true);
-                    httpURLConnection.setDoOutput(true);
-                    httpURLConnection.setUseCaches(false);
-                    httpURLConnection.setRequestMethod("POST");
-                    httpURLConnection.setRequestProperty("httpURLConnection", "Keep-Alive");
-                    httpURLConnection.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
-
-                    description = ET_DESC_OPTION.getText().toString();
                     image_name = image_path.substring(image_path.lastIndexOf("/") + 1);
 
                     FileInputStream fileInputStream;
@@ -323,6 +327,7 @@ public class CreateIssuewithOneImageActivity extends AppCompatActivity {
                     outputStream.writeBytes(twoHyphens + boundary + lineEnd);
                     int HttpResult = httpURLConnection.getResponseCode();
                     System.out.println(HttpResult);
+                    
                     if (HttpResult == HttpURLConnection.HTTP_OK) {
                         BufferedReader br = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream(), "utf-8"));
                         String line = null;
