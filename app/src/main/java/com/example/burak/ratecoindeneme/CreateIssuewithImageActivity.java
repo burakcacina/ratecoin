@@ -263,6 +263,7 @@ public class CreateIssuewithImageActivity extends AppCompatActivity {
         }
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
+            dialog.cancel();
 
             if(result != null && error != null)
             {
@@ -358,5 +359,7 @@ public class CreateIssuewithImageActivity extends AppCompatActivity {
     public void onBackPressed() {
         Intent intentUpdate = new Intent(getApplicationContext(), HomeActivity.class);
         startActivity(intentUpdate);
+        this.finish();
+
     }
 }

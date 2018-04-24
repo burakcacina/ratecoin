@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@drawable/picture2"
@@ -13,19 +14,20 @@
         android:gravity="center"
         android:text="DESCRIPTION"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/Red"
-        android:textColorLink="@color/Green"
+        android:textColor="@color/Grey"
+        android:textColorLink="@color/Palepurple"
         android:textStyle="bold" />
+
 
     <TextView
         android:id="@+id/IssueDescription"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:background="@color/colorPrimaryDark"
         android:gravity="center"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColorLink="@color/Green" />
+        android:textColorLink="@color/Palepurple" />
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -37,8 +39,7 @@
             android:id="@+id/issueFirstimage"
             android:layout_width="180dp"
             android:layout_height="210dp"
-            android:layout_gravity="left"
-            android:layout_marginRight="15dp"
+            android:layout_gravity="center"
             android:adjustViewBounds="true"
             android:background="@drawable/my_custom_selector"
             android:gravity="center"

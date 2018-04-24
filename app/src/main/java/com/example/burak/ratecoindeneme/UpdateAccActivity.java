@@ -117,13 +117,13 @@ public class UpdateAccActivity extends AppCompatActivity {
 
                 if (!user_pass.equals(user_pass_conf)) {
                     System.out.println("PASSWORD NOT EQUAL");
-                    error2 = "not match";                }
+                    error2 = "Passwords not match";                }
                 else {
                     String data2 = URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(user_pass, "UTF-8");
                     OutputStreamWriter out = new OutputStreamWriter(httpURLConnection.getOutputStream());
                     out.write(data2.toString());
                     out.close();
-                }
+
                     int HttpResult = httpURLConnection.getResponseCode();
                     System.out.println(HttpResult);
                     if (HttpResult == HttpURLConnection.HTTP_OK) {
@@ -135,6 +135,7 @@ public class UpdateAccActivity extends AppCompatActivity {
                             sb.append(line + "\n");
                         }
                         br.close();
+                        error2 = null;
 
                     } else {
                         BufferedReader br = new BufferedReader(new InputStreamReader(httpURLConnection.getErrorStream(), "utf-8"));
@@ -145,9 +146,10 @@ public class UpdateAccActivity extends AppCompatActivity {
                         br.close();
                         JSONObject jsonObj = new JSONObject(sb.toString());
                         error = jsonObj.getString("message");
+                        error2 = null;
                         return error;
                     }
-
+                }
 
             } catch (MalformedURLException e) {
 
@@ -164,15 +166,13 @@ public class UpdateAccActivity extends AppCompatActivity {
             return null;
         }
 
-        public class Response {
-            public String response_notmatch;
-        }
-
         protected void onPostExecute(String error) {
-            if (error != null && error2 != null) {
-                Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
+            if (error2 != null) {
                 Toast.makeText(getApplicationContext(), error2, Toast.LENGTH_LONG).show();
-
+            }
+            else if(error != null)
+            {
+                Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
             }
             else  {
                 Toast.makeText(getApplicationContext(), "Password Updated", Toast.LENGTH_LONG).show();
@@ -187,6 +187,7 @@ public class UpdateAccActivity extends AppCompatActivity {
     public void onBackPressed() {
         Intent intentUpdate = new Intent(getApplicationContext(), HomeActivity.class);
         startActivity(intentUpdate);
+        this.finish();
     }
 
 }

@@ -286,6 +286,8 @@ public class UserDetailsActivity extends AppCompatActivity {
     public void onBackPressed() {
         Intent intentUpdate = new Intent(getApplicationContext(), HomeActivity.class);
         startActivity(intentUpdate);
+        this.finish();
+
     }
 
 }

@@ -1,11 +1,13 @@
 package com.example.burak.ratecoindeneme;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -158,7 +160,7 @@ public class PromotionsActivity extends AppCompatActivity {
             if(result != null) {
                 PromotionAdapter adapter = new PromotionAdapter(getApplicationContext(), R.layout.activity_showpromotions, result);
                 lvPromotions.setAdapter(adapter);
-                tvtotalAmount.setText("Total Cost: " + totalcost +" RTC");
+                tvtotalAmount.setText("Total RTC: " + totalcost );
                 lvPromotions.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
@@ -207,6 +209,7 @@ public class PromotionsActivity extends AppCompatActivity {
             inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
         }
 
+        @SuppressLint("ResourceAsColor")
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
 
@@ -255,6 +258,15 @@ public class PromotionsActivity extends AppCompatActivity {
 
 
             holder.tvPro_description.setText(PromotionModelList.get(position).getDescription());
+            holder.tvPro_cost.setText("Cost: " + PromotionModelList.get(position).getcost() + " RTC");
+            holder.tvPro_cost.setTextColor(getResources().getColor(R.color.DarkRed));
+
+            if(PromotionModelList.get(position).getcost() <= totalcost)
+            {
+                holder.tvPro_cost.setText("Cost: " + PromotionModelList.get(position).getcost() + " RTC");
+                holder.tvPro_cost.setTextColor(getResources().getColor(R.color.LightGreen));
+            }
+
             holder.tvPro_cost.setText("Cost: " + PromotionModelList.get(position).getcost() + " RTC");
             holder.tvPro_brand.setText("Brand: " + PromotionModelList.get(position).getBrand());
 

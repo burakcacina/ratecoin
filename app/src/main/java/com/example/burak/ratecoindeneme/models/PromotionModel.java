@@ -5,6 +5,7 @@ import java.util.List;
 public class PromotionModel {
     private int id;
     private int cost;
+    private String costPK;
     private String brand;
     private String description;
     private String image;
@@ -20,6 +21,13 @@ public class PromotionModel {
     }
     public void setcost(int cost) {
         this.cost = cost;
+    }
+
+    public String getcostPK() {
+        return costPK;
+    }
+    public void setcostPK(String costPK) {
+        this.costPK = costPK;
     }
 
     public String getBrand() {

@@ -60,6 +60,7 @@ public class WalletActivity extends AppCompatActivity {
     private TextView tvwalletPK;
     private TextView tvtotalAmount;
     String primaryKey;
+    String totalcost;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -124,6 +125,7 @@ public class WalletActivity extends AppCompatActivity {
                         TransactionModelList.add(TransactionModel);
                     }
                     primaryKey = jsonObj.getString("PrimaryKey");
+                    totalcost = jsonObj.getString("totalcost");
                     return TransactionModelList;
                 } else {
                     BufferedReader br = new BufferedReader(new InputStreamReader(httpURLConnection.getErrorStream(), "utf-8"));
@@ -153,7 +155,7 @@ public class WalletActivity extends AppCompatActivity {
             if(result != null) {
                 TransactionAdapter adapter = new TransactionAdapter(getApplicationContext(), R.layout.activity_showtransaction, result);
                 lvTransaction.setAdapter(adapter);
-                tvtotalAmount.setText("Total Cost: " + result.get(0).getTotalcost());
+                tvtotalAmount.setText("Total RTC: " + totalcost);
                 tvwalletPK.setText("Wallet Primary Key: "+ primaryKey);
             } else {
                 Toast.makeText(getApplicationContext(), "Create Wallet First!", Toast.LENGTH_SHORT).show();

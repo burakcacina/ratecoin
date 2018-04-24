@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_toLeftOf="@id/remove"
-            android:backgroundTint="@color/blue" />
+            android:backgroundTint="@color/Purplishwhite" />
 
     </RelativeLayout>
 

@@ -19,7 +19,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="34dp"
             android:hint="              Write your question here"
-            android:textColorLink="@color/Green"
+            android:textColorLink="@color/Palepurple"
             android:textStyle="italic" />
     </RelativeLayout>
 
@@ -61,7 +61,7 @@
                 android:layout_alignParentLeft="true"
                 android:hint="Add Options here"
                 android:layout_toLeftOf="@id/add"
-                android:textColorLink="@color/Green" />
+                android:textColorLink="@color/Palepurple" />
 
 
         </RelativeLayout>

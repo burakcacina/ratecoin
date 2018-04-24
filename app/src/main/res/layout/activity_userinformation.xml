@@ -36,9 +36,9 @@
             android:gravity="center"
             android:text="USER NAME"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/Red"
+            android:textColor="@color/Grey"
             android:textColorLink="@color/colorPrimaryDark"
-            android:textSize="18sp"
+            android:textSize="14sp"
             android:textStyle="bold" />
 
         <TextView
@@ -47,9 +47,9 @@
             android:layout_height="wrap_content"
             android:text="MAIL"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/Red"
+            android:textColor="@color/Grey"
             android:textColorLink="@color/colorPrimaryDark"
-            android:textSize="18sp"
+            android:textSize="14sp"
             android:textStyle="bold" />
 
         <TextView
@@ -58,9 +58,9 @@
             android:layout_height="wrap_content"
             android:text="WALLET: 0 RTC "
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/Red"
+            android:textColor="@color/Grey"
             android:textColorLink="@color/colorPrimaryDark"
-            android:textSize="18sp"
+            android:textSize="14sp"
             android:textStyle="bold" />
 
         <Button

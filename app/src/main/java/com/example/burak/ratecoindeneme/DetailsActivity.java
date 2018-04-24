@@ -293,7 +293,7 @@ public class DetailsActivity extends AppCompatActivity {
         }
         protected void onPostExecute(String result2) {
             super.onPostExecute(result2);
-            dialog.cancel();
+            dialog.dismiss();
 
             if(opt[3] == null) {
                 option_1.setText(opt[0]);
@@ -319,14 +319,7 @@ public class DetailsActivity extends AppCompatActivity {
             issueFirstimage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    check = true;
                     issueFirstimage.setSelected(true);
-                }
-            });
-
-            issueVoteopt.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    new JSONTask().execute(URL_TO_HIT);
                 }
             });
 
@@ -373,6 +366,11 @@ public class DetailsActivity extends AppCompatActivity {
                 }
             });
 
+            issueVoteopt.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    new JSONTask().execute(String.valueOf(selected));
+                }
+            });
 
             issueVoteopt.setVisibility(View.VISIBLE);
             issueDescription.setText(description);
@@ -441,7 +439,7 @@ public class DetailsActivity extends AppCompatActivity {
             issueFirstimage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    check = true;
+                    selected = 1;
                     issueFirstimage.setSelected(true);
                     issueSecondimage.setSelected(false);
 
@@ -452,7 +450,7 @@ public class DetailsActivity extends AppCompatActivity {
             issueSecondimage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    check = false;
+                    selected = 2;
                     issueFirstimage.setSelected(false);
                     issueSecondimage.setSelected(true);
 
@@ -461,7 +459,7 @@ public class DetailsActivity extends AppCompatActivity {
 
             issueVoteopt.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    new JSONTask().execute(URL_TO_HIT);
+                    new JSONTask().execute(String.valueOf(selected));
                 }
             });
 
@@ -513,14 +511,6 @@ public class DetailsActivity extends AppCompatActivity {
                     }
                     else {
                         jsonParam.put("optID", optionsID[3]);
-                    }
-                }
-                else {
-                    if (check) {
-                        jsonParam.put("optID", optionsID[0]);
-
-                    } else {
-                        jsonParam.put("optID", optionsID[1]);
                     }
                 }
 
@@ -639,6 +629,5 @@ public class DetailsActivity extends AppCompatActivity {
             startActivity(intentUpdate);
             this.finish();
         }
-
     }
 }

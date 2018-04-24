@@ -21,29 +21,23 @@
         android:gravity="center"
         android:text="DESCRIPTION"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/Red"
+        android:textColor="@color/Grey"
         android:textStyle="bold" />
-
 
     <TextView
         android:id="@+id/IssueDescription"
         android:layout_width="match_parent"
-        android:layout_height="62dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:background="@drawable/rounded_border_edittext"
-        android:backgroundTint="@color/colorPrimaryDark"
+        android:background="@color/colorPrimaryDark"
         android:gravity="center"
-        android:text=""
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@android:color/black"
-        android:textStyle="bold|italic" />
-
+        android:textColorLink="@color/Palepurple" />
 
     <View
         android:layout_width="fill_parent"
         android:layout_height="30dp"></View>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="311dp"

@@ -251,12 +251,12 @@ public class UserCreatedActivity extends AppCompatActivity {
             holder.tvCreated.setText("Created: " + IssueModelList.get(position).getName());
             if(IssueModelList.get(position).getStatus() == 1)
             {
-                holder.frma.setBackgroundResource(R.color.Green);
+                holder.frma.setBackgroundResource(R.color.Palepurple);
 
             }
             else
             {
-                holder.frma.setBackgroundResource(R.color.Red);
+                holder.frma.setBackgroundResource(R.color.Grey);
             }
 
             return convertView;

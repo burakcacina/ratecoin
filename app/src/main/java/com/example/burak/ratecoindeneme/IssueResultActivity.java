@@ -199,10 +199,8 @@ public class IssueResultActivity extends AppCompatActivity {
                 int width = bitmaps[0].getWidth();
                 int height = bitmaps[0].getHeight();
 
-
-
                 if (width > height) {
-                    rotatedBitmaps[0] = BITMAP_RESIZER(bitmaps[i]);
+                    rotatedBitmaps[0] = BITMAP_RESIZER(bitmaps[0]);
                 } else if (width == height) {
                     rotatedBitmaps[0] = rotate(bitmaps[0], 90);
                 } else {
