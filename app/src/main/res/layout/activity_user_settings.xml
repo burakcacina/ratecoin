@@ -30,6 +30,7 @@
         android:textColorHighlight="@android:color/black"
         android:textColorHint="@color/colorPrimary"
         android:textColorLink="@android:color/black"
+        android:textCursorDrawable="@android:color/black"
         android:textStyle="italic" />
 
     <EditText
@@ -47,6 +48,7 @@
         android:textColorHighlight="@android:color/black"
         android:textColorHint="@color/colorPrimary"
         android:textColorLink="@android:color/black"
+        android:textCursorDrawable="@android:color/black"
         android:textStyle="italic" />
 
     <Button

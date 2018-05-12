@@ -32,7 +32,9 @@
             android:textColor="@android:color/black"
             android:textColorHint="@color/colorPrimary"
             android:textColorLink="@android:color/black"
-            android:textStyle="italic" />
+            android:textStyle="italic"
+            android:textCursorDrawable="@android:color/black"
+            android:inputType="text"/>
 
         <EditText
             android:id="@+id/user_login_pass"
@@ -49,6 +51,7 @@
             android:textColorHighlight="@android:color/black"
             android:textColorHint="@color/colorPrimary"
             android:textColorLink="@android:color/black"
+            android:textCursorDrawable="@android:color/black"
             android:textStyle="italic" />
 
         <Button

@@ -44,8 +44,8 @@
 
         <TextView
             android:id="@+id/options_1"
-            android:layout_width="502dp"
-            android:layout_height="35dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:background="@drawable/my_custom_selector"
             android:ems="10"
             android:gravity="center"
@@ -58,8 +58,8 @@
 
         <TextView
             android:id="@+id/options_2"
-            android:layout_width="502dp"
-            android:layout_height="35dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:background="@drawable/my_custom_selector"
             android:ems="10"
             android:gravity="center"
@@ -71,8 +71,8 @@
 
         <TextView
             android:id="@+id/options_3"
-            android:layout_width="502dp"
-            android:layout_height="35dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:background="@drawable/my_custom_selector"
             android:ems="10"
             android:gravity="center"
@@ -84,8 +84,8 @@
 
         <TextView
             android:id="@+id/options_4"
-            android:layout_width="502dp"
-            android:layout_height="35dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:background="@drawable/my_custom_selector"
             android:ems="10"
             android:gravity="center"

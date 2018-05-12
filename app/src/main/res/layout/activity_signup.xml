@@ -40,7 +40,10 @@
         android:textColor="@android:color/black"
         android:textColorHint="@color/colorPrimary"
         android:textColorLink="@android:color/black"
-        android:textStyle="italic" />
+        android:textStyle="italic"
+        android:textCursorDrawable="@android:color/black"
+        android:inputType="text"/>
+
 
     <EditText
         android:id="@+id/new_user_mail"
@@ -52,8 +55,11 @@
         android:backgroundTint="@color/colorAccent"
         android:hint="User Mail"
         android:textColorHint="@color/colorPrimary"
+        android:textCursorDrawable="@android:color/black"
         android:textStyle="italic"
-        android:gravity="center"/>
+        android:gravity="center"
+        android:inputType="text"/>
+
 
     <EditText
         android:id="@+id/new_user_pass"
@@ -70,6 +76,7 @@
         android:textColorHighlight="@android:color/black"
         android:textColorHint="@color/colorPrimary"
         android:textColorLink="@android:color/black"
+        android:textCursorDrawable="@android:color/black"
         android:textStyle="italic" />
     <Button
         android:id="@+id/userReg"
